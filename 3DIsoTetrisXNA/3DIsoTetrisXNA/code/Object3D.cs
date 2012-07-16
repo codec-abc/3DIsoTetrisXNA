@@ -83,15 +83,21 @@ namespace TetrisGame
         public void render(BasicEffect basicEffet ,GraphicsDevice device ,int depth)
         {
             this.UpdateLogic();
+            
             Matrix backup1 = basicEffet.World;
-            Matrix translate = Matrix.CreateTranslation(this.Position);
-            Matrix temp = translate * backup1;
+            Matrix temp = basicEffet.World;
+
             Matrix scale = Matrix.CreateScale(this.Size);
             temp = scale * temp;
+
             Matrix rotate = this.Rotation;
             temp = rotate * temp;
+
+            Matrix translate = Matrix.CreateTranslation(this.Position);
+            temp = translate * temp;
+            
+            
             basicEffet.World = temp;
-            Matrix backup2 = basicEffet.World;
 
             if (TetrisGame.debug)
             {
@@ -112,7 +118,6 @@ namespace TetrisGame
    
             foreach (Object3D obj in Childs) // Loop through List with foreach
             {
-                basicEffet.World = backup2;
                 obj.render(basicEffet, device, depth +1);
             }
             

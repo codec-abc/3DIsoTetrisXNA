@@ -40,24 +40,13 @@ namespace TetrisGame
             graphics.PreferMultiSampling = true;
             rootObject.setName("rootObject");
 
-          //  TetrisLine lineToDraw = new TetrisLine(new Vector3(1, 1, 1), Vector3.Zero);
             RotatingCube rotatingCube1 = new RotatingCube(new Vector3(1, 1, 1), Vector3.Zero);
             rotatingCube1.setName("rotatingCube1");
             rootObject.Add(rotatingCube1);
 
-            RotatingCube rotatingCube2 = new RotatingCube(new Vector3(1, 1, 1), new Vector3(1,0,1));
-            rotatingCube2.setName("rotatingCube2");
-            rotatingCube1.Add(rotatingCube2);
-         //   rootObject.Add(lineToDraw);
-            /*
-            Cube cubeToDraw = new Cube(new Vector3(1, 1, 1), Vector3.Zero);
-            Cube cubeToDraw2 = new Cube(new Vector3(1, 1, 1), new Vector3(1,2,1));
-            ObjectsList.Add(cubeToDraw);
-            ObjectsList.Add(cubeToDraw2);
-            */
-
-            // Frame rate is 30 fps by default for Windows Phone.
-          //  TargetElapsedTime = TimeSpan.FromTicks(333333);
+            RotatingCube RotatingCube2 = new RotatingCube(new Vector3(1, 1, 1), new Vector3(1, 0, 1));
+            RotatingCube2.setName("RotatingCube2");
+            rotatingCube1.Add(RotatingCube2);
         }
 
         /// <summary>
