@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using CubeBuilder;
+using TetrisGame;
 
-namespace CubeBuilder
+namespace TetrisGame
 {
     /// <summary>
     /// A cube constructed with vertices, faces and normals.

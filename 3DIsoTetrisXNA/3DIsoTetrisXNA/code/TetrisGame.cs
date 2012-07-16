@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using System.Collections;
 
 
-namespace CubeBuilder
+namespace TetrisGame
 {
     /// <summary>
     /// This is the main type for your game

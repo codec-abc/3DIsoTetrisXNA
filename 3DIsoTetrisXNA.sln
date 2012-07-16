@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3DIsoTetrisXNA", "WindowsGame1\WindowsGame1\3DIsoTetrisXNA.csproj", "{610EC9D2-D01F-4F3C-872D-F6AEAF667393}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3DIsoTetrisXNA", "3DIsoTetrisXNA\3DIsoTetrisXNA\3DIsoTetrisXNA.csproj", "{610EC9D2-D01F-4F3C-872D-F6AEAF667393}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3DIsoTetrisXNAContent", "WindowsGame1\WindowsGame1Content\3DIsoTetrisXNAContent.contentproj", "{0790AC26-52F6-4B08-8B89-CFFB0373C253}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3DIsoTetrisXNAContent", "3DIsoTetrisXNA\3DIsoTetrisXNAContent\3DIsoTetrisXNAContent.contentproj", "{0790AC26-52F6-4B08-8B89-CFFB0373C253}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 using System;
 
-namespace CubeBuilder
+namespace TetrisGame
 {
 #if WINDOWS || XBOX
     static class Program
