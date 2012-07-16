@@ -39,14 +39,18 @@ namespace TetrisGame
             Content.RootDirectory = "Content";
             graphics.PreferMultiSampling = true;
             rootObject.setName("rootObject");
-
-            RotatingCube rotatingCube1 = new RotatingCube(new Vector3(1, 1, 1), Vector3.Zero);
+            /*
+            RotatingCube rotatingCube1 = new RotatingCube(Vector3.One, Vector3.Zero);
             rotatingCube1.setName("rotatingCube1");
             rootObject.Add(rotatingCube1);
 
-            RotatingCube RotatingCube2 = new RotatingCube(new Vector3(1, 1, 1), new Vector3(1, 0, 1));
+            RotatingCube RotatingCube2 = new RotatingCube(Vector3.One, new Vector3(1, 0, 1));
             RotatingCube2.setName("RotatingCube2");
             rotatingCube1.Add(RotatingCube2);
+            */
+            TetrisLine line = new TetrisLine(Vector3.One, new Vector3(2, 0, 2));
+            line.setName("TetrisLine1");
+            rootObject.Add(line);
         }
 
         /// <summary>
@@ -119,13 +123,13 @@ namespace TetrisGame
             basicEffet.Projection = Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
 
             // Enable textures on the Cube Effect. this is necessary to texture the model
-            basicEffet.TextureEnabled = false;
+            basicEffet.TextureEnabled = true;
             basicEffet.Texture = cubeTexture;
 
             // Enable some pretty lights
             basicEffet.EnableDefaultLighting();
 
-            basicEffet.DiffuseColor = new Vector3(0.5f, 0.5f, 0.5f);
+            
             rootObject.render(basicEffet,GraphicsDevice,0); 
             base.Draw(gameTime);
         }

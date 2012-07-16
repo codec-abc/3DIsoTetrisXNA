@@ -13,7 +13,6 @@ namespace TetrisGame
 {
     public abstract class Object3D
     {
-
         public string Name = "3DObject";
         public String getName()
         {
@@ -109,6 +108,8 @@ namespace TetrisGame
                 Console.WriteLine(" ");
                 Console.WriteLine(" ");
             }
+            
+
             foreach (EffectPass pass in basicEffet.CurrentTechnique.Passes)
             {
                 pass.Apply();

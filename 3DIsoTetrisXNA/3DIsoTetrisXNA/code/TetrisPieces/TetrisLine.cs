@@ -23,16 +23,16 @@ namespace TetrisGame
         {
 
             Vector3 pos;
-            pos = new Vector3((float)(position.X + 0.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
+            pos = new Vector3((float)(position.X - 3.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
             cube1 = new Cube(size, pos);
 
-            pos = new Vector3((float)(position.X + 2.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
+            pos = new Vector3((float)(position.X - 1.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
             cube2 = new Cube(size, pos);
 
-            pos = new Vector3((float)(position.X + 4.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
+            pos = new Vector3((float)(position.X + 1.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
             cube3 = new Cube(size, pos);
 
-            pos = new Vector3((float)(position.X + 6.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
+            pos = new Vector3((float)(position.X + 3.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
             cube4 = new Cube(size, pos);
 
             NUM_TRIANGLES = 12;
@@ -57,7 +57,7 @@ namespace TetrisGame
 
         public override void UpdateLogic()
         {
-            return;
+            this.Rotation = Matrix.CreateRotationY(MathHelper.ToRadians(0.4f)) * this.Rotation;
         }
 
     }
