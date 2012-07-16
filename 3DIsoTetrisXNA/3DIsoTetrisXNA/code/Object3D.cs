@@ -93,12 +93,16 @@ namespace TetrisGame
             basicEffet.World = temp;
             Matrix backup2 = basicEffet.World;
 
-            Console.WriteLine("object to display : " + this.getName());
-            Console.WriteLine("object depth : " + depth);
-            Console.WriteLine("object parent relative position : " + this.Position);
-            Console.WriteLine("object parent relative size : " + this.Size);
-            Console.WriteLine(" ");
-            Console.WriteLine(" ");
+            if (TetrisGame.debug)
+            {
+                Console.WriteLine("object to display : " + this.getName());
+                Console.WriteLine("object depth : " + depth);
+                Console.WriteLine("object parent relative position : " + this.Position);
+                Console.WriteLine("object parent relative size : " + this.Size);
+                Console.WriteLine("object parent relative rotation : " + this.Rotation);
+                Console.WriteLine(" ");
+                Console.WriteLine(" ");
+            }
             foreach (EffectPass pass in basicEffet.CurrentTechnique.Passes)
             {
                 pass.Apply();

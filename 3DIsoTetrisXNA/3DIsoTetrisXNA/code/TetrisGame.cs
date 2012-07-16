@@ -19,6 +19,8 @@ namespace TetrisGame
     /// </summary>
     public class TetrisGame : Microsoft.Xna.Framework.Game
     {
+        public static bool debug=false;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Matrix move = Matrix.Identity;
@@ -29,12 +31,6 @@ namespace TetrisGame
         // Create a cube with a size of 1 (all dimensions) at the origin
         DummyObject rootObject = new DummyObject();
         
-        
-
-        // Position related variables
-     //   Vector3 cameraPosition = new Vector3(0, 3, 4);
-     //   Vector3 modelPosition = Vector3.Zero;
-        float rotation = 0.0f;
         float aspectRatio = 0.0f;
 
         public TetrisGame()
@@ -45,9 +41,13 @@ namespace TetrisGame
             rootObject.setName("rootObject");
 
           //  TetrisLine lineToDraw = new TetrisLine(new Vector3(1, 1, 1), Vector3.Zero);
-            RotatingCube test = new RotatingCube(new Vector3(1, 1, 1), Vector3.Zero);
-            test.setName("rotatingCube");
-            rootObject.Add(test);
+            RotatingCube rotatingCube1 = new RotatingCube(new Vector3(1, 1, 1), Vector3.Zero);
+            rotatingCube1.setName("rotatingCube1");
+            rootObject.Add(rotatingCube1);
+
+            RotatingCube rotatingCube2 = new RotatingCube(new Vector3(1, 1, 1), new Vector3(1,0,1));
+            rotatingCube2.setName("rotatingCube2");
+            rotatingCube1.Add(rotatingCube2);
          //   rootObject.Add(lineToDraw);
             /*
             Cube cubeToDraw = new Cube(new Vector3(1, 1, 1), Vector3.Zero);
@@ -122,15 +122,12 @@ namespace TetrisGame
 
             // Set the World matrix which defines the position of the cube
             basicEffet.World = Matrix.Identity;
-            basicEffet.View = Matrix.CreateLookAt(new Vector3(-1,1,-1),Vector3.Zero,new Vector3(0,1,0)) * Matrix.CreateScale(1);
+            basicEffet.View = Matrix.CreateLookAt(new Vector3(-50,50,-50),Vector3.Zero,new Vector3(0,1,0)) * Matrix.CreateScale(1);
             
             int screenWidth = Window.ClientBounds.Width;
             int screenHeight = Window.ClientBounds.Height;
          
             basicEffet.Projection = Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
-           
-            // Set the Projection matrix which defines how we see the scene (Field of view)
-          //  cubeEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1.0f, 1000.0f);
 
             // Enable textures on the Cube Effect. this is necessary to texture the model
             basicEffet.TextureEnabled = false;
@@ -139,38 +136,9 @@ namespace TetrisGame
             // Enable some pretty lights
             basicEffet.EnableDefaultLighting();
 
-
             basicEffet.DiffuseColor = new Vector3(0.5f, 0.5f, 0.5f);
-
-           // basicEffet.World = move * basicEffet.World ;
-            // apply the effect and render the cube
-          
-                this.render(rootObject, GraphicsDevice, 0);
-               // rootObject.render(basicEffet,GraphicsDevice,0); 
-            
-
+            rootObject.render(basicEffet,GraphicsDevice,0); 
             base.Draw(gameTime);
-        }
-
-
-        public void render(Object3D object3D, GraphicsDevice device, int depth)
-        {
-            Matrix backup1 = basicEffet.World;
-            Matrix translate = Matrix.CreateTranslation(object3D.getPosition());
-            Matrix temp = translate * backup1;
-            Matrix scale = Matrix.CreateScale(object3D.getSize());
-            temp = scale * temp;
-            Matrix rotate = object3D.getRotation();
-            temp = rotate * temp;
-            basicEffet.World = temp;
-            Matrix backup2 = basicEffet.World;
-            object3D.RenderToDevice(device);
-
-            foreach (Object3D obj in object3D.getChilds()) // Loop through List with foreach
-            {
-                basicEffet.World = backup2;
-                obj.render(basicEffet, device, depth + 1);
-            }
         }
     }
 }
