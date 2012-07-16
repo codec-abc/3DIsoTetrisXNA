@@ -42,8 +42,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="328425.png">
-      <Name>328425</Name>
+    <Compile Include="uvGrid.jpg">
+      <Name>uvGrid</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="uvGrid2.jpg">
+      <Name>uvGrid2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="uvGrid3.png">
+      <Name>uvGrid3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

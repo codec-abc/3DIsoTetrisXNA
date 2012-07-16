@@ -21,8 +21,11 @@ namespace TetrisGame
     {
 
 
+
         public Cube(Vector3 size, Vector3 position)
         {
+            NUM_TRIANGLES = 12;
+            NUM_VERTICES = 36;
             Size = size;
             Position = position;
         }
@@ -30,7 +33,7 @@ namespace TetrisGame
         public override void RenderToDevice(GraphicsDevice device)
         {
             // Build the cube, setting up the _vertices array
-            if (_isConstructed == false)
+            if (isConstructed == false)
                 Construct();
 
             // Create the shape buffer and dispose of it to prevent out of memory
@@ -129,7 +132,7 @@ namespace TetrisGame
             _vertices[34] = new VertexPositionNormalTexture(topRightFront, normalRight, textureTopLeft);
             _vertices[35] = new VertexPositionNormalTexture(btmRightBack, normalRight, textureBottomRight);
 
-            _isConstructed = true;
+            isConstructed = true;
         }
 
     }

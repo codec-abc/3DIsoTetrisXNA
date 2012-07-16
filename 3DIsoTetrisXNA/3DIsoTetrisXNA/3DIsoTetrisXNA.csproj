@@ -108,7 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="code\Cube.cs" />
+    <Compile Include="code\DummyObject.cs" />
     <Compile Include="code\Object3D.cs" />
+    <Compile Include="code\TetrisPieces\Line.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="code\Program.cs" />
     <Compile Include="code\TetrisGame.cs" />

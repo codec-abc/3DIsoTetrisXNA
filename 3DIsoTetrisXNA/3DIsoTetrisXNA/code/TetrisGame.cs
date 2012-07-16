@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Collections;
+using TetrisGame;
 
 
 namespace TetrisGame
@@ -26,7 +27,7 @@ namespace TetrisGame
         BasicEffect basicEffet;
 
         // Create a cube with a size of 1 (all dimensions) at the origin
-        List<Object3D> ObjectsList = new List<Object3D>();
+        DummyObject rootObject = new DummyObject();
         
         
 
@@ -41,12 +42,16 @@ namespace TetrisGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferMultiSampling = true;
-
             
+            Line lineToDraw = new Line(new Vector3(1, 1, 1), Vector3.Zero);
+            rootObject.Add(lineToDraw);
+            /*
             Cube cubeToDraw = new Cube(new Vector3(1, 1, 1), Vector3.Zero);
             Cube cubeToDraw2 = new Cube(new Vector3(1, 1, 1), new Vector3(1,2,1));
             ObjectsList.Add(cubeToDraw);
             ObjectsList.Add(cubeToDraw2);
+            */
+
             // Frame rate is 30 fps by default for Windows Phone.
           //  TargetElapsedTime = TimeSpan.FromTicks(333333);
         }
@@ -73,7 +78,7 @@ namespace TetrisGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            cubeTexture = Content.Load<Texture2D>("328425");
+            cubeTexture = Content.Load<Texture2D>("uvGrid3");
             aspectRatio = GraphicsDevice.Viewport.AspectRatio;
             basicEffet = new BasicEffect(GraphicsDevice);
         }
@@ -109,7 +114,7 @@ namespace TetrisGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Color.Black);
 
             // Set the World matrix which defines the position of the cube
             basicEffet.World = Matrix.Identity;
@@ -122,26 +127,26 @@ namespace TetrisGame
             
             int screenWidth = Window.ClientBounds.Width;
             int screenHeight = Window.ClientBounds.Height;
-            basicEffet.Projection = Matrix.CreateOrthographic(screenWidth, screenHeight, 1.0f, 100000.0f);
+            basicEffet.Projection = Matrix.CreateOrthographic(screenWidth, screenHeight, 0.001f, 10000000.0f);
             // Set the Projection matrix which defines how we see the scene (Field of view)
           //  cubeEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1.0f, 1000.0f);
 
             // Enable textures on the Cube Effect. this is necessary to texture the model
-            basicEffet.TextureEnabled = true;
+            basicEffet.TextureEnabled = false;
             basicEffet.Texture = cubeTexture;
 
             // Enable some pretty lights
             basicEffet.EnableDefaultLighting();
 
+
+            basicEffet.DiffuseColor = new Vector3(0.5f, 0.5f, 0.5f);
+
             // apply the effect and render the cube
             foreach (EffectPass pass in basicEffet.CurrentTechnique.Passes)
             {
                 pass.Apply();
-
-                foreach (Object3D obj in ObjectsList)
-                {
-                    obj.RenderToDevice(GraphicsDevice);
-                }
+                rootObject.RenderToDevice(GraphicsDevice);
+                rootObject.render(basicEffet,GraphicsDevice); 
             }
 
             base.Draw(gameTime);
