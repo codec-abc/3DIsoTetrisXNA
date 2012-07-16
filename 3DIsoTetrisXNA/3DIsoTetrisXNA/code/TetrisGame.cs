@@ -21,7 +21,7 @@ namespace TetrisGame
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        Matrix move = Matrix.Identity;
         // Content
         Texture2D cubeTexture;
         BasicEffect basicEffet;
@@ -42,11 +42,13 @@ namespace TetrisGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferMultiSampling = true;
-            
-            TetrisLine lineToDraw = new TetrisLine(new Vector3(1, 1, 1), Vector3.Zero);
+            rootObject.setName("rootObject");
+
+          //  TetrisLine lineToDraw = new TetrisLine(new Vector3(1, 1, 1), Vector3.Zero);
             RotatingCube test = new RotatingCube(new Vector3(1, 1, 1), Vector3.Zero);
+            test.setName("rotatingCube");
             rootObject.Add(test);
-            rootObject.Add(lineToDraw);
+         //   rootObject.Add(lineToDraw);
             /*
             Cube cubeToDraw = new Cube(new Vector3(1, 1, 1), Vector3.Zero);
             Cube cubeToDraw2 = new Cube(new Vector3(1, 1, 1), new Vector3(1,2,1));
@@ -104,7 +106,9 @@ namespace TetrisGame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
+            float time =gameTime.ElapsedGameTime.Milliseconds/1000.0f;
+            rootObject.UpdateLogic();
+            move = Matrix.CreateTranslation(new Vector3(1f * time, 0, 1f * time)) *move ;
             base.Update(gameTime);
         }
 
@@ -118,25 +122,12 @@ namespace TetrisGame
 
             // Set the World matrix which defines the position of the cube
             basicEffet.World = Matrix.Identity;
-         //   basicEffet.World = Matrix.CreateRotationY(MathHelper.ToRadians(rotation)) *
-         //       Matrix.CreateRotationX(MathHelper.ToRadians(rotation)) * Matrix.CreateTranslation(modelPosition);
-
-            // Set the View matrix which defines the camera and what it's looking at
-       //     basicEffet.View = Matrix.CreateLookAt(cameraPosition, modelPosition, Vector3.Up);
             basicEffet.View = Matrix.CreateLookAt(new Vector3(-1,1,-1),Vector3.Zero,new Vector3(0,1,0)) * Matrix.CreateScale(1);
-            //basicEffet.View = Matrix.Identity *
-            //    Matrix.CreateRotationX(MathHelper.ToRadians(120)) *
-            //    Matrix.CreateRotationZ(MathHelper.ToRadians(120)) *
-            //    Matrix.CreateRotationY(MathHelper.ToRadians(120)) *
-
-            //    Matrix.CreateScale(20);
-          //  basicEffet.View = basicEffet.View * Matrix.CreateTranslation(new Vector3(-10, 0, -10));
             
             int screenWidth = Window.ClientBounds.Width;
             int screenHeight = Window.ClientBounds.Height;
-            basicEffet.Projection = Matrix.CreateOrthographic(screenWidth, screenHeight, 0.001f, 1000.0f);
-            basicEffet.Projection =
-                Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
+         
+            basicEffet.Projection = Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
            
             // Set the Projection matrix which defines how we see the scene (Field of view)
           //  cubeEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1.0f, 1000.0f);
@@ -151,15 +142,39 @@ namespace TetrisGame
 
             basicEffet.DiffuseColor = new Vector3(0.5f, 0.5f, 0.5f);
 
+           // basicEffet.World = move * basicEffet.World ;
             // apply the effect and render the cube
-            foreach (EffectPass pass in basicEffet.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                rootObject.RenderToDevice(GraphicsDevice);
-                rootObject.render(basicEffet,GraphicsDevice); 
-            }
+          
+                this.render(rootObject, GraphicsDevice, 0);
+               // rootObject.render(basicEffet,GraphicsDevice,0); 
+            
 
             base.Draw(gameTime);
         }
+
+
+        public void render(Object3D object3D, GraphicsDevice device, int depth)
+        {
+            Matrix backup1 = basicEffet.World;
+            Matrix translate = Matrix.CreateTranslation(object3D.getPosition());
+            Matrix temp = translate * backup1;
+            Matrix scale = Matrix.CreateScale(object3D.getSize());
+            temp = scale * temp;
+            Matrix rotate = object3D.getRotation();
+            temp = rotate * temp;
+            basicEffet.World = temp;
+            Matrix backup2 = basicEffet.World;
+            object3D.RenderToDevice(device);
+
+            foreach (Object3D obj in object3D.getChilds()) // Loop through List with foreach
+            {
+                basicEffet.World = backup2;
+                obj.render(basicEffet, device, depth + 1);
+            }
+        }
     }
 }
+
+
+
+ 

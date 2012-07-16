@@ -14,9 +14,26 @@ namespace TetrisGame
     public abstract class Object3D
     {
 
+        public string Name = "3DObject";
+        public String getName()
+        {
+            return this.Name;
+        }
+        public void setName(string name)
+        {
+            this.Name = name;
+        }
 
 
-        protected List<Object3D> childs = new List<Object3D>();
+        protected List<Object3D> Childs = new List<Object3D>();
+        public List<Object3D> getChilds()
+        {
+            return this.Childs;
+        }
+        public void setChilds(List<Object3D> childs)
+        {
+            this.Childs = childs;
+        }
 
         protected Vector3 Size = new Vector3(1.0f, 1.0f, 1.0f);
         public Vector3 getSize()
@@ -63,28 +80,43 @@ namespace TetrisGame
 
         public abstract void RenderToDevice(GraphicsDevice device);
 
-        public void render(BasicEffect basicEffet ,GraphicsDevice device)
+        public void render(BasicEffect basicEffet ,GraphicsDevice device ,int depth)
         {
             this.UpdateLogic();
             Matrix backup1 = basicEffet.World;
-            Matrix temp = backup1 * Matrix.CreateTranslation(this.Position);
-            temp = temp * Matrix.CreateScale(this.Size);
-            temp = temp * this.Rotation;
+            Matrix translate = Matrix.CreateTranslation(this.Position);
+            Matrix temp = translate * backup1;
+            Matrix scale = Matrix.CreateScale(this.Size);
+            temp = scale * temp;
+            Matrix rotate = this.Rotation;
+            temp = rotate * temp;
             basicEffet.World = temp;
             Matrix backup2 = basicEffet.World;
-            
-            this.RenderToDevice(device);
-            
-            foreach (Object3D obj in childs) // Loop through List with foreach
+
+            Console.WriteLine("object to display : " + this.getName());
+            Console.WriteLine("object depth : " + depth);
+            Console.WriteLine("object parent relative position : " + this.Position);
+            Console.WriteLine("object parent relative size : " + this.Size);
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            foreach (EffectPass pass in basicEffet.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                this.RenderToDevice(device);
+            }
+         
+   
+            foreach (Object3D obj in Childs) // Loop through List with foreach
             {
                 basicEffet.World = backup2;
-                obj.render(basicEffet, device);
+                obj.render(basicEffet, device, depth +1);
             }
+            
         }
 
         public void Add(Object3D obj)
         {
-            this.childs.Add(obj);
+            this.Childs.Add(obj);
         }
 
         public abstract void UpdateLogic();
