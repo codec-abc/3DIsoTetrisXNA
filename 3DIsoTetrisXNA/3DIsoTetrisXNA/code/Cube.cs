@@ -8,19 +8,8 @@ using TetrisGame;
 
 namespace TetrisGame
 {
-    /// <summary>
-    /// A cube constructed with vertices, faces and normals.
-    /// There are 6 faces made up of 2 triangles each.
-    /// 2 triangles per face * 3 vertices per triangle = 6 vertices per face
-    /// 36 vertices total, 12 polygons (triangles) total.
-    /// 
-    /// This code is based off of the excellent post for XNA 3.1 here:
-    /// http://www.switchonthecode.com/tutorials/creating-a-textured-box-in-xna
-    /// </summary>
-    public class Cube : Object3D
+    public class Cube : GeometryObject
     {
-
-
 
         public Cube(Vector3 size, Vector3 position)
         {
@@ -133,6 +122,11 @@ namespace TetrisGame
             _vertices[35] = new VertexPositionNormalTexture(btmRightBack, normalRight, textureBottomRight);
 
             isConstructed = true;
+        }
+
+        public override void UpdateLogic()
+        {
+            return;
         }
 
     }

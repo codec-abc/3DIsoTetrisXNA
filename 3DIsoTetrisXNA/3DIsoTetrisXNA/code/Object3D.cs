@@ -14,8 +14,7 @@ namespace TetrisGame
     public abstract class Object3D
     {
 
-        protected int NUM_TRIANGLES;
-        protected int NUM_VERTICES;
+
 
         protected List<Object3D> childs = new List<Object3D>();
 
@@ -51,7 +50,6 @@ namespace TetrisGame
 
         protected bool isConstructed = false;
 
-        protected Matrix rotation = Matrix.Identity;
 
         // Array of vertex information - contains position, normal and texture data
         protected VertexPositionNormalTexture[] _vertices;
@@ -67,13 +65,16 @@ namespace TetrisGame
 
         public void render(BasicEffect basicEffet ,GraphicsDevice device)
         {
+            this.UpdateLogic();
             Matrix backup1 = basicEffet.World;
             Matrix temp = backup1 * Matrix.CreateTranslation(this.Position);
             temp = temp * Matrix.CreateScale(this.Size);
             temp = temp * this.Rotation;
             basicEffet.World = temp;
             Matrix backup2 = basicEffet.World;
+            
             this.RenderToDevice(device);
+            
             foreach (Object3D obj in childs) // Loop through List with foreach
             {
                 basicEffet.World = backup2;
@@ -85,5 +86,7 @@ namespace TetrisGame
         {
             this.childs.Add(obj);
         }
+
+        public abstract void UpdateLogic();
     }
 }

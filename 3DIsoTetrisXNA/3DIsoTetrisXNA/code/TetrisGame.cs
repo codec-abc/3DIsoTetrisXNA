@@ -32,8 +32,8 @@ namespace TetrisGame
         
 
         // Position related variables
-        Vector3 cameraPosition = new Vector3(0, 3, 4);
-        Vector3 modelPosition = Vector3.Zero;
+     //   Vector3 cameraPosition = new Vector3(0, 3, 4);
+     //   Vector3 modelPosition = Vector3.Zero;
         float rotation = 0.0f;
         float aspectRatio = 0.0f;
 
@@ -43,7 +43,9 @@ namespace TetrisGame
             Content.RootDirectory = "Content";
             graphics.PreferMultiSampling = true;
             
-            Line lineToDraw = new Line(new Vector3(1, 1, 1), Vector3.Zero);
+            TetrisLine lineToDraw = new TetrisLine(new Vector3(1, 1, 1), Vector3.Zero);
+            RotatingCube test = new RotatingCube(new Vector3(1, 1, 1), Vector3.Zero);
+            rootObject.Add(test);
             rootObject.Add(lineToDraw);
             /*
             Cube cubeToDraw = new Cube(new Vector3(1, 1, 1), Vector3.Zero);
@@ -103,8 +105,6 @@ namespace TetrisGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            rotation += 0.5f;
-
             base.Update(gameTime);
         }
 
@@ -118,16 +118,26 @@ namespace TetrisGame
 
             // Set the World matrix which defines the position of the cube
             basicEffet.World = Matrix.Identity;
-            basicEffet.World = Matrix.CreateRotationY(MathHelper.ToRadians(rotation)) *
-                Matrix.CreateRotationX(MathHelper.ToRadians(rotation)) * Matrix.CreateTranslation(modelPosition);
+         //   basicEffet.World = Matrix.CreateRotationY(MathHelper.ToRadians(rotation)) *
+         //       Matrix.CreateRotationX(MathHelper.ToRadians(rotation)) * Matrix.CreateTranslation(modelPosition);
 
             // Set the View matrix which defines the camera and what it's looking at
-            basicEffet.View = Matrix.CreateLookAt(cameraPosition, modelPosition, Vector3.Up);
-            basicEffet.View = Matrix.CreateLookAt(cameraPosition, modelPosition, Vector3.Up) * Matrix.CreateScale(20);
+       //     basicEffet.View = Matrix.CreateLookAt(cameraPosition, modelPosition, Vector3.Up);
+            basicEffet.View = Matrix.CreateLookAt(new Vector3(-1,1,-1),Vector3.Zero,new Vector3(0,1,0)) * Matrix.CreateScale(1);
+            //basicEffet.View = Matrix.Identity *
+            //    Matrix.CreateRotationX(MathHelper.ToRadians(120)) *
+            //    Matrix.CreateRotationZ(MathHelper.ToRadians(120)) *
+            //    Matrix.CreateRotationY(MathHelper.ToRadians(120)) *
+
+            //    Matrix.CreateScale(20);
+          //  basicEffet.View = basicEffet.View * Matrix.CreateTranslation(new Vector3(-10, 0, -10));
             
             int screenWidth = Window.ClientBounds.Width;
             int screenHeight = Window.ClientBounds.Height;
-            basicEffet.Projection = Matrix.CreateOrthographic(screenWidth, screenHeight, 0.001f, 10000000.0f);
+            basicEffet.Projection = Matrix.CreateOrthographic(screenWidth, screenHeight, 0.001f, 1000.0f);
+            basicEffet.Projection =
+                Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
+           
             // Set the Projection matrix which defines how we see the scene (Field of view)
           //  cubeEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1.0f, 1000.0f);
 

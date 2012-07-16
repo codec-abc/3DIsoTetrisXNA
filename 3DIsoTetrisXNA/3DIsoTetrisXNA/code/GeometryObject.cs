@@ -5,8 +5,12 @@ using System.Text;
 
 namespace TetrisGame
 {
-    class DummyObject : Object3D
+    public class GeometryObject : Object3D
     {
+
+        protected int NUM_TRIANGLES;
+        protected int NUM_VERTICES;
+
         protected override void Construct()
         {
             return;

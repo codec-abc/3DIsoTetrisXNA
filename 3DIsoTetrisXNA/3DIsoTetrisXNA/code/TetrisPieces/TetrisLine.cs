@@ -12,14 +12,14 @@ using Microsoft.Xna.Framework.Media;
 
 namespace TetrisGame
 {
-    class Line : Object3D
+    class TetrisLine : GeometryObject
     {
         Cube cube1;
         Cube cube2;
         Cube cube3;
         Cube cube4;
 
-        public Line(Vector3 size, Vector3 position)
+        public TetrisLine(Vector3 size, Vector3 position)
         {
 
             Vector3 pos;
@@ -55,6 +55,10 @@ namespace TetrisGame
             cube4.RenderToDevice(device);
         }
 
+        public override void UpdateLogic()
+        {
+            return;
+        }
 
     }
 }
