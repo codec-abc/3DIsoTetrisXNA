@@ -21,6 +21,8 @@ namespace TetrisGame
     {
         public static bool debug=true;
         public static DummyObject rootObject = new DummyObject();
+        public static KeyboardState oldState;
+        public static KeyboardState newState;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -40,6 +42,8 @@ namespace TetrisGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferMultiSampling = true;
+            oldState = Keyboard.GetState();
+            newState = Keyboard.GetState();
 
             rootObject.setName("rootObject");
             rootObject.setPosition(new Vector3(0,0,0));
@@ -48,7 +52,7 @@ namespace TetrisGame
             {
                 
                 DummyObject dummy1 = new DummyObject();
-                dummy1.setPosition(new Vector3(3, 0, 0));
+                dummy1.setPosition(new Vector3(0, 0, 0));
                 dummy1.setName("Dummy1");
                 dummy1.setVisible(true);
                 rootObject.Add(dummy1);
