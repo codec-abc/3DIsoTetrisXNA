@@ -19,7 +19,7 @@ namespace TetrisGame
     /// </summary>
     public class TetrisGame : Microsoft.Xna.Framework.Game
     {
-        public static bool debug=false;
+        public static bool debug=true;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -39,15 +39,8 @@ namespace TetrisGame
             Content.RootDirectory = "Content";
             graphics.PreferMultiSampling = true;
             rootObject.setName("rootObject");
-            /*
-            RotatingCube rotatingCube1 = new RotatingCube(Vector3.One, Vector3.Zero);
-            rotatingCube1.setName("rotatingCube1");
-            rootObject.Add(rotatingCube1);
+            rootObject.setPosition(new Vector3(0,0,0));
 
-            RotatingCube RotatingCube2 = new RotatingCube(Vector3.One, new Vector3(1, 0, 1));
-            RotatingCube2.setName("RotatingCube2");
-            rotatingCube1.Add(RotatingCube2);
-            */
             TetrisLine line = new TetrisLine(Vector3.One, new Vector3(2, 0, 2));
             line.setName("TetrisLine1");
             rootObject.Add(line);
@@ -100,8 +93,8 @@ namespace TetrisGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             float time =gameTime.ElapsedGameTime.Milliseconds/1000.0f;
-            rootObject.UpdateLogic();
-            move = Matrix.CreateTranslation(new Vector3(1f * time, 0, 1f * time)) *move ;
+            rootObject.UpdateLogic(time);
+          //  move = Matrix.CreateTranslation(new Vector3(1f * time, 0, 1f * time)) *move ;
             base.Update(gameTime);
         }
 

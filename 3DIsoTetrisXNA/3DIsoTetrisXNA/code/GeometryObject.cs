@@ -21,7 +21,7 @@ namespace TetrisGame
             return;
         }
 
-        public override void UpdateLogic()
+        public override void UpdateLogic(float time)
         {
             return;
         }

@@ -81,10 +81,30 @@ namespace TetrisGame
 
         public void render(BasicEffect basicEffet ,GraphicsDevice device ,int depth)
         {
-            this.UpdateLogic();
             
-            Matrix backup1 = basicEffet.World;
+            Matrix backup = basicEffet.World;
+            Vector3 antiOrigin = backup.Translation;
+            
+
             Matrix temp = basicEffet.World;
+
+            Matrix backToOrigin = Matrix.CreateTranslation(-antiOrigin);
+            temp = backToOrigin * temp;
+
+            Vector3 center = temp.Translation;
+
+            
+            if (TetrisGame.debug)
+            {
+                Console.WriteLine("object to display : " + this.getName());
+                Console.WriteLine("object world position : " + center);
+                Console.WriteLine("object world position : " + (-antiOrigin));
+                Console.WriteLine(" ");
+                Console.WriteLine(" ");
+            }
+
+            Matrix translateBackToParent = Matrix.CreateTranslation(antiOrigin);
+            temp = translateBackToParent * temp;
 
             Matrix scale = Matrix.CreateScale(this.Size);
             temp = scale * temp;
@@ -92,12 +112,12 @@ namespace TetrisGame
             Matrix rotate = this.Rotation;
             temp = rotate * temp;
 
+
             Matrix translate = Matrix.CreateTranslation(this.Position);
             temp = translate * temp;
-            
-            
-            basicEffet.World = temp;
 
+            basicEffet.World = temp;
+            
             if (TetrisGame.debug)
             {
                 Console.WriteLine("object to display : " + this.getName());
@@ -105,6 +125,7 @@ namespace TetrisGame
                 Console.WriteLine("object parent relative position : " + this.Position);
                 Console.WriteLine("object parent relative size : " + this.Size);
                 Console.WriteLine("object parent relative rotation : " + this.Rotation);
+                Console.WriteLine("world matrix : " + basicEffet.World);
                 Console.WriteLine(" ");
                 Console.WriteLine(" ");
             }
@@ -121,6 +142,7 @@ namespace TetrisGame
             {
                 obj.render(basicEffet, device, depth +1);
             }
+            basicEffet.World = backup;
             
         }
 
@@ -129,6 +151,8 @@ namespace TetrisGame
             this.Childs.Add(obj);
         }
 
-        public abstract void UpdateLogic();
+
+
+        public abstract void UpdateLogic(float time);
     }
 }

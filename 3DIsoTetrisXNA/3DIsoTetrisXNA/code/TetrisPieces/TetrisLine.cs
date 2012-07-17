@@ -35,11 +35,9 @@ namespace TetrisGame
             pos = new Vector3((float)(position.X + 3.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
             cube4 = new Cube(size, pos);
 
-            NUM_TRIANGLES = 12;
-            NUM_VERTICES = 36;
-            Size = size;
-            Position = position;
-            isConstructed = true;
+    //        Size = size;
+    //        Position = position;
+            isConstructed = false;
         }
         protected override void Construct()
         {
@@ -55,7 +53,7 @@ namespace TetrisGame
             cube4.RenderToDevice(device);
         }
 
-        public override void UpdateLogic()
+        public override void UpdateLogic(float time)
         {
             this.Rotation = Matrix.CreateRotationY(MathHelper.ToRadians(0.4f)) * this.Rotation;
         }

@@ -48,16 +48,16 @@ namespace TetrisGame
             _vertices = new VertexPositionNormalTexture[NUM_VERTICES];
 
             // Calculate the position of the vertices on the top face.
-            Vector3 topLeftFront = Position + new Vector3(-1.0f, 1.0f, -1.0f) * Size;
-            Vector3 topLeftBack = Position + new Vector3(-1.0f, 1.0f, 1.0f) * Size;
-            Vector3 topRightFront = Position + new Vector3(1.0f, 1.0f, -1.0f) * Size;
-            Vector3 topRightBack = Position + new Vector3(1.0f, 1.0f, 1.0f) * Size;
+            Vector3 topLeftFront =  new Vector3(-1.0f, 1.0f, -1.0f) * Size;
+            Vector3 topLeftBack = new Vector3(-1.0f, 1.0f, 1.0f) * Size;
+            Vector3 topRightFront =  new Vector3(1.0f, 1.0f, -1.0f) * Size;
+            Vector3 topRightBack =  new Vector3(1.0f, 1.0f, 1.0f) * Size;
 
             // Calculate the position of the vertices on the bottom face.
-            Vector3 btmLeftFront = Position + new Vector3(-1.0f, -1.0f, -1.0f) * Size;
-            Vector3 btmLeftBack = Position + new Vector3(-1.0f, -1.0f, 1.0f) * Size;
-            Vector3 btmRightFront = Position + new Vector3(1.0f, -1.0f, -1.0f) * Size;
-            Vector3 btmRightBack = Position + new Vector3(1.0f, -1.0f, 1.0f) * Size;
+            Vector3 btmLeftFront =  new Vector3(-1.0f, -1.0f, -1.0f) * Size;
+            Vector3 btmLeftBack =  new Vector3(-1.0f, -1.0f, 1.0f) * Size;
+            Vector3 btmRightFront =  new Vector3(1.0f, -1.0f, -1.0f) * Size;
+            Vector3 btmRightBack =  new Vector3(1.0f, -1.0f, 1.0f) * Size;
 
             // Normal vectors for each face (needed for lighting / display)
             Vector3 normalFront = new Vector3(0.0f, 0.0f, 1.0f) * Size;
@@ -124,7 +124,7 @@ namespace TetrisGame
             isConstructed = true;
         }
 
-        public override void UpdateLogic()
+        public override void UpdateLogic(float time)
         {
             return;
         }
