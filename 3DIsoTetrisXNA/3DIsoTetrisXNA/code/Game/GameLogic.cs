@@ -60,20 +60,35 @@ namespace TetrisGame
         {
             Console.WriteLine("");
             Console.WriteLine("");
+            List<int[]> currentBlockPos = currentBlock.computeActualPos();
             for (int y = 0; y < 20; y++)
             {
                 string line = "|";
                 for (int x = 0; x < 10; x++)
                 {
                     TetrisCell currentCell = this.grid.getCell(x, y);
-                    string temp;
-                    if (currentCell.isEmpty())
+                    string temp="$";
+                    bool activeOnCell = false;
+                    for (int i = 0; i < currentBlockPos.Count && activeOnCell==false; i++)
                     {
-                        temp = "$";
+                        int xCube = currentBlockPos[i][0] ;
+                        int yCube = currentBlockPos[i][1];
+                        if (xCube == x && yCube == y)
+                        {
+                            temp = "*";
+                            activeOnCell = true;
+                        }
                     }
-                    else
+                    if (!activeOnCell)
                     {
-                        temp = "*";
+                        if (currentCell.isEmpty())
+                        {
+                            temp = "$";
+                        }
+                        else
+                        {
+                            temp = "*";
+                        }
                     }
                     line = line + temp + "|";
                 }
