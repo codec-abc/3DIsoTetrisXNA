@@ -47,6 +47,12 @@ namespace TetrisGame
             line.setName("TetrisLine1");
             rootObject.Add(line);
 
+            DummyObject toto = new DummyObject();
+            toto.setPosition(new Vector3(3, 0, 0));
+            toto.setName("dummy object2");
+            line.Add(toto);
+            toto.setVisible(true);
+
             rootObject.setVisible(true);
             
         }
@@ -130,7 +136,6 @@ namespace TetrisGame
 
 
 
-
             mateEffect.World = Matrix.Identity;
             mateEffect.View = Matrix.CreateLookAt(new Vector3(-50, 50, -50), Vector3.Zero, new Vector3(0, 1, 0)) * Matrix.CreateScale(1);
 
@@ -138,13 +143,14 @@ namespace TetrisGame
 
             // Enable textures on the Cube Effect. this is necessary to texture the model
             mateEffect.TextureEnabled = false;
+            mateEffect.VertexColorEnabled = true;
             mateEffect.Texture = cubeTexture;
 
             // Enable some pretty lights
            // mateEffect.EnableDefaultLighting();
 
             
-            rootObject.render(shadedEffect,GraphicsDevice,0);
+          //  rootObject.render(shadedEffect,GraphicsDevice,0);
             rootObject.render(mateEffect, GraphicsDevice, 0); 
             base.Draw(gameTime);
         }

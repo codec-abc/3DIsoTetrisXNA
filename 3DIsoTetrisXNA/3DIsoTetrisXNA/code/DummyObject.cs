@@ -38,13 +38,13 @@ namespace TetrisGame
             pointList = new VertexPositionColor[6];
 
             VertexPositionColor vertex1 = new VertexPositionColor(new Vector3(0, 0, 0), Color.Red);
-            VertexPositionColor vertex2 = new VertexPositionColor(new Vector3(10, 0, 0), Color.Red);
+            VertexPositionColor vertex2 = new VertexPositionColor(new Vector3(3, 0, 0), Color.Red);
 
             VertexPositionColor vertex3 = new VertexPositionColor(new Vector3(0, 0, 0), Color.Blue);
-            VertexPositionColor vertex4 = new VertexPositionColor(new Vector3(0, 0, 10), Color.Blue);
+            VertexPositionColor vertex4 = new VertexPositionColor(new Vector3(0, 0, 3), Color.Blue);
 
             VertexPositionColor vertex5 = new VertexPositionColor(new Vector3(0, 0, 0), Color.Green);
-            VertexPositionColor vertex6 = new VertexPositionColor(new Vector3(0, 10, 0), Color.Green);
+            VertexPositionColor vertex6 = new VertexPositionColor(new Vector3(0, 3, 0), Color.Green);
 
             pointList[0] = vertex1;
             pointList[1] = vertex2;
