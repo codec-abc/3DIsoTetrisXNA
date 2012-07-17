@@ -54,7 +54,7 @@ namespace TetrisGame
 
         }
 
-        public override void RenderToDevice(GraphicsDevice device)
+        public override void RenderToDevice(GraphicsDevice device, BasicEffect basicEffet)
         {
 
         }

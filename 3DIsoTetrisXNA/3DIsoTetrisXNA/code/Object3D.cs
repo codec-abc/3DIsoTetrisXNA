@@ -79,7 +79,7 @@ namespace TetrisGame
         
         protected abstract void Construct();
 
-        public abstract void RenderToDevice(GraphicsDevice device);
+        public abstract void RenderToDevice(GraphicsDevice device, BasicEffect basicEffet);
 
         public void render(BasicEffect basicEffet ,GraphicsDevice device ,int depth)
         {
@@ -98,13 +98,13 @@ namespace TetrisGame
             
             if (TetrisGame.debug)
             {
-                /*
+                
                 Console.WriteLine("object to display : " + this.getName());
                 Console.WriteLine("object world position : " + center);
                 Console.WriteLine("object world position : " + (-antiOrigin));
                 Console.WriteLine(" ");
                 Console.WriteLine(" ");
-                 * */
+                 
             }
 
             Matrix translateBackToParent = Matrix.CreateTranslation(antiOrigin);
@@ -139,7 +139,7 @@ namespace TetrisGame
             foreach (EffectPass pass in basicEffet.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                this.RenderToDevice(device);
+                this.RenderToDevice(device, basicEffet);
             }
          
    

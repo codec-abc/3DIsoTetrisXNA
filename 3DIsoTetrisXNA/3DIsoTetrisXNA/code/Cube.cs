@@ -19,28 +19,30 @@ namespace TetrisGame
             Position = position;
         }
 
-        public override void RenderToDevice(GraphicsDevice device)
+        public override void RenderToDevice(GraphicsDevice device, BasicEffect basicEffet)
         {
-           
-            // Build the cube, setting up the _vertices array
-            if (isConstructed == false)
-                Construct();
-            
-            // Create the shape buffer and dispose of it to prevent out of memory
-            using (VertexBuffer buffer = new VertexBuffer(
-                device,
-                VertexPositionNormalTexture.VertexDeclaration,
-                NUM_VERTICES,
-                BufferUsage.WriteOnly))
+            if (basicEffet.LightingEnabled)
             {
-                // Load the buffer
-                buffer.SetData(_vertices);
+                // Build the cube, setting up the _vertices array
+                if (isConstructed == false)
+                    Construct();
 
-                // Send the vertex buffer to the device
-                device.SetVertexBuffer(buffer);
-                // Draw the primitives from the vertex buffer to the device as triangles
-                device.DrawPrimitives(PrimitiveType.TriangleList, 0, NUM_TRIANGLES);
-            } 
+                // Create the shape buffer and dispose of it to prevent out of memory
+                using (VertexBuffer buffer = new VertexBuffer(
+                    device,
+                    VertexPositionNormalTexture.VertexDeclaration,
+                    NUM_VERTICES,
+                    BufferUsage.WriteOnly))
+                {
+                    // Load the buffer
+                    buffer.SetData(_vertices);
+
+                    // Send the vertex buffer to the device
+                    device.SetVertexBuffer(buffer);
+                    // Draw the primitives from the vertex buffer to the device as triangles
+                    device.DrawPrimitives(PrimitiveType.TriangleList, 0, NUM_TRIANGLES);
+                }
+            }
         }
 
         protected override void Construct()

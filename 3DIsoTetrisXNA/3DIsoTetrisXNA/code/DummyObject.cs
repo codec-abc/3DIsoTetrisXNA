@@ -13,7 +13,11 @@ namespace TetrisGame
 {
     public class DummyObject : Object3D
     {
-        protected bool isVisible = false;
+        
+        public bool Visible;
+        public bool isVisible() { return Visible; }
+        public void setVisible(bool value) { Visible = value; }
+        
 
         VertexPositionColor[] pointList;
 
@@ -26,6 +30,7 @@ namespace TetrisGame
             this.Size = Vector3.One;
             this.Rotation = Matrix.Identity;
             this.isConstructed = false;
+            this.Visible = false;
         }
 
         protected override void Construct()
@@ -33,13 +38,13 @@ namespace TetrisGame
             pointList = new VertexPositionColor[6];
 
             VertexPositionColor vertex1 = new VertexPositionColor(new Vector3(0, 0, 0), Color.Red);
-            VertexPositionColor vertex2 = new VertexPositionColor(new Vector3(1, 0, 0), Color.Red);
+            VertexPositionColor vertex2 = new VertexPositionColor(new Vector3(10, 0, 0), Color.Red);
 
             VertexPositionColor vertex3 = new VertexPositionColor(new Vector3(0, 0, 0), Color.Blue);
-            VertexPositionColor vertex4 = new VertexPositionColor(new Vector3(0, 0, 1), Color.Blue);
+            VertexPositionColor vertex4 = new VertexPositionColor(new Vector3(0, 0, 10), Color.Blue);
 
             VertexPositionColor vertex5 = new VertexPositionColor(new Vector3(0, 0, 0), Color.Green);
-            VertexPositionColor vertex6 = new VertexPositionColor(new Vector3(0, 1, 0), Color.Green);
+            VertexPositionColor vertex6 = new VertexPositionColor(new Vector3(0, 10, 0), Color.Green);
 
             pointList[0] = vertex1;
             pointList[1] = vertex2;
@@ -59,28 +64,32 @@ namespace TetrisGame
         }
 
 
-        public override void RenderToDevice(Microsoft.Xna.Framework.Graphics.GraphicsDevice device)
+        public override void RenderToDevice(GraphicsDevice device, BasicEffect basicEffet)
         {
-            
-            if (isVisible)
+
+            if (Visible)
             {
-                
-                if (isConstructed == false)
-                    Construct();
-                
-                
-
-                using (VertexBuffer buffer = new VertexBuffer(device,
-                    VertexPositionColor.VertexDeclaration,
-                  points,
-                  BufferUsage.WriteOnly))
+                if (!basicEffet.LightingEnabled)
                 {
-                    // Load the buffer
-                    buffer.SetData(pointList);
+                    if (isConstructed == false)
+                        Construct();
 
-                    // Send the vertex buffer to the device
-                    device.SetVertexBuffer(buffer);
-                    device.DrawUserIndexedPrimitives<VertexPositionColor>(PrimitiveType.LineList, pointList, 0, 6, lineListIndices, 0, 3);
+                    using
+                        (
+                        VertexBuffer buffer = new VertexBuffer(
+                        device,
+                        VertexPositionColor.VertexDeclaration,
+                        points,
+                        BufferUsage.WriteOnly)
+                      )
+                    {
+                        // Load the buffer
+                        buffer.SetData(pointList);
+
+                        // Send the vertex buffer to the device
+                        device.SetVertexBuffer(buffer);
+                        device.DrawUserIndexedPrimitives<VertexPositionColor>(PrimitiveType.LineList, pointList, 0, 6, lineListIndices, 0, 3);
+                    }
                 }
             }
         }

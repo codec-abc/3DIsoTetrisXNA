@@ -26,7 +26,8 @@ namespace TetrisGame
         Matrix move = Matrix.Identity;
         // Content
         Texture2D cubeTexture;
-        public static BasicEffect basicEffet;
+        public static BasicEffect shadedEffect;
+        public static BasicEffect mateEffect;
 
         // Create a cube with a size of 1 (all dimensions) at the origin
         DummyObject rootObject = new DummyObject();
@@ -38,12 +39,16 @@ namespace TetrisGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferMultiSampling = true;
+
             rootObject.setName("rootObject");
             rootObject.setPosition(new Vector3(0,0,0));
 
             TetrisLine line = new TetrisLine(Vector3.One, new Vector3(0, 0, 0));
             line.setName("TetrisLine1");
             rootObject.Add(line);
+
+            rootObject.setVisible(true);
+            
         }
 
         /// <summary>
@@ -70,7 +75,8 @@ namespace TetrisGame
 
             cubeTexture = Content.Load<Texture2D>("uvGrid3");
             aspectRatio = GraphicsDevice.Viewport.AspectRatio;
-            basicEffet = new BasicEffect(GraphicsDevice);
+            shadedEffect = new BasicEffect(GraphicsDevice);
+            mateEffect = new BasicEffect(GraphicsDevice);
         }
 
         /// <summary>
@@ -105,26 +111,41 @@ namespace TetrisGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
-            // Set the World matrix which defines the position of the cube
-          //  basicEffet = new BasicEffect(GraphicsDevice);
-            basicEffet.World = Matrix.Identity;
-            basicEffet.View = Matrix.CreateLookAt(new Vector3(-50,50,-50),Vector3.Zero,new Vector3(0,1,0)) * Matrix.CreateScale(1);
-            
             int screenWidth = Window.ClientBounds.Width;
             int screenHeight = Window.ClientBounds.Height;
-         
-            basicEffet.Projection = Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
+
+            // Set the World matrix which defines the position of the cube
+
+            shadedEffect.World = Matrix.Identity;
+            shadedEffect.View = Matrix.CreateLookAt(new Vector3(-50,50,-50),Vector3.Zero,new Vector3(0,1,0)) * Matrix.CreateScale(1);
+            
+            shadedEffect.Projection = Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
 
             // Enable textures on the Cube Effect. this is necessary to texture the model
-            basicEffet.TextureEnabled = true;
-            basicEffet.Texture = cubeTexture;
+            shadedEffect.TextureEnabled = true;
+            shadedEffect.Texture = cubeTexture;
 
             // Enable some pretty lights
-            basicEffet.EnableDefaultLighting();
+            shadedEffect.EnableDefaultLighting();
+
+
+
+
+            mateEffect.World = Matrix.Identity;
+            mateEffect.View = Matrix.CreateLookAt(new Vector3(-50, 50, -50), Vector3.Zero, new Vector3(0, 1, 0)) * Matrix.CreateScale(1);
+
+            mateEffect.Projection = Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
+
+            // Enable textures on the Cube Effect. this is necessary to texture the model
+            mateEffect.TextureEnabled = false;
+            mateEffect.Texture = cubeTexture;
+
+            // Enable some pretty lights
+           // mateEffect.EnableDefaultLighting();
 
             
-            rootObject.render(basicEffet,GraphicsDevice,0); 
+            rootObject.render(shadedEffect,GraphicsDevice,0);
+            rootObject.render(mateEffect, GraphicsDevice, 0); 
             base.Draw(gameTime);
         }
     }
