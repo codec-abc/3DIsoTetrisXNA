@@ -7,9 +7,14 @@ namespace TetrisGame
 {
     public class TetrisCell
     {
+        protected bool empty = true;
         public bool isEmpty()
         {
-            throw new NotImplementedException();
+            return empty;
+        }
+        public void setEmptyness(bool value)
+        {
+            this.empty = value;
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TetrisGame.code.Game;
+using TetrisGame;
 
 namespace TetrisGame
 {
@@ -17,7 +17,6 @@ namespace TetrisGame
 
         TetrisBlock currentBlock = null;
         TetrisGrid grid = new TetrisGrid();
-        List<TetrisBlock> BlockInGame = new List<TetrisBlock>();
 
         public GameLogic()
         {
@@ -47,6 +46,7 @@ namespace TetrisGame
             frameEllapsedSinceLastMove++;
             if (this.HasToUpdate())
             {
+                this.print();
                 this.computeNextIteration();
                 frameEllapsedSinceLastMove = 0;
             }
@@ -56,14 +56,43 @@ namespace TetrisGame
             }
         }
 
+        public void print()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("");
+            for (int y = 0; y < 20; y++)
+            {
+                string line = "|";
+                for (int x = 0; x < 10; x++)
+                {
+                    TetrisCell currentCell = this.grid.getCell(x, y);
+                    string temp;
+                    if (currentCell.isEmpty())
+                    {
+                        temp = "$";
+                    }
+                    else
+                    {
+                        temp = "*";
+                    }
+                    line = line + temp + "|";
+                }
+                Console.WriteLine(line);
+            }
+            Console.WriteLine("");
+            Console.WriteLine("");
+        }
+
         public void computeNextIteration()
         {
             try 
             {
-                currentBlock.tryToMove(BlockInGame);
+                currentBlock.tryToMove(grid);
             }
             catch (UnableToMoveBlockException e)
             {
+                this.grid.add(currentBlock);
+                this.print();
                 TetrisBlock blockToAdd = TetrisBlock.generateBlock();
                 if (this.grid.canAdd(blockToAdd))
                 {
@@ -72,13 +101,15 @@ namespace TetrisGame
                 else
                 {
                     gameOver = true;
+                    Console.WriteLine("!!!!!!!!!! Game Over !!!!!!!!!!");
                 }
             }
         }
 
         public bool HasToUpdate()
         {
-            if (frameEllapsedSinceLastMove > 0.0473f * level * level - 3.8782f * level + 63.654f)
+          //  if (frameEllapsedSinceLastMove > 0.0473f * level * level - 3.8782f * level + 63.654f)
+            if (frameEllapsedSinceLastMove > 2)
             {
                 return true;
             }

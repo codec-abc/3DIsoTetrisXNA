@@ -8,11 +8,78 @@ namespace TetrisGame
     public abstract class TetrisBlock
     {
         protected static Random random = new Random();
+        protected int x = 0;
+        protected int y = 0;
+        protected int rotation = 0;
         protected static int numberOfBlocks = 7;
         protected List<int[]> pos;
-        public void tryToMove(List<TetrisBlock> BlockInGame)
+        public void tryToMove(TetrisGrid grid)
         {
-            throw new NotImplementedException();
+
+            List<int[]> newPos = this.computeNextPos();
+            List<int[]> Pos = this.computeActualPos();
+            // compute next position
+            bool canMove = true;
+            for (int i = 0; i < newPos.Count; i++)
+            {
+                try
+                {
+                    TetrisCell cell = grid.getCell(newPos[i][0], newPos[i][1]);
+                    if (!cell.isEmpty())
+                    {
+                        canMove = false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    canMove = false;
+                }
+            }
+            // test if new position intersect at least one full cell
+            if (!canMove) // if intersect -> place block in grid at its location, throw execption
+            {
+                for (int i = 0; i < pos.Count; i++)
+                {
+                    TetrisCell cell = grid.getCell(Pos[i][0], Pos[i][1]);
+                    cell.setEmptyness(false);
+                }
+                throw new UnableToMoveBlockException();
+            }
+            else //  else -> update block position
+            {
+                this.y = this.y + 1;
+            }
+        }
+
+        private List<int[]> computeNextPos()
+        {
+            List<int[]> returnValue = new List<int[]>();
+            for (int i = 0; i < this.pos.Count; i++)
+            {
+                int xCube = pos[i][0]+this.x;
+                int yCube = pos[i][1]+this.y;
+                yCube++;
+                int[] tab = new int[2];
+                tab[0] = xCube;
+                tab[1] = yCube;
+                returnValue.Add(tab);
+            }
+            return returnValue;
+        }
+
+        public List<int[]> computeActualPos()
+        {
+            List<int[]> returnValue = new List<int[]>();
+            for (int i = 0; i < this.pos.Count; i++)
+            {
+                int xCube = pos[i][0] + this.x;
+                int yCube = pos[i][1] + this.y;
+                int[] tab = new int[2];
+                tab[0] = xCube;
+                tab[1] = yCube;
+                returnValue.Add(tab);
+            }
+            return returnValue;
         }
 
         public static TetrisBlock generateBlock()
@@ -20,7 +87,6 @@ namespace TetrisGame
             int i  = random.Next(1, 7);
             switch (i)
             {
-                
                 case 1: return new BlockI();
                 case 2: return new BlockJ();
                 case 3: return new BlockL();
@@ -30,11 +96,6 @@ namespace TetrisGame
                 case 7: return new BlockZ();
                 default: return new BlockI();
             }
-        }
-
-        internal List<int[]> getPos()
-        {
-            throw new NotImplementedException();
         }
     }
 }
