@@ -112,7 +112,7 @@
     <Compile Include="code\Object3D.cs" />
     <Compile Include="code\GeometryObject.cs" />
     <Compile Include="code\TestPieces\RotatingCube.cs" />
-    <Compile Include="code\TetrisPieces\TetrisLine.cs" />
+    <Compile Include="code\TetrisPieces\LinePiece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="code\Program.cs" />
     <Compile Include="code\TetrisGame.cs" />

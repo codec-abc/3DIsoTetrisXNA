@@ -16,7 +16,7 @@ namespace TetrisGame
         }
         public override void UpdateLogic(float time)
         {
-            this.Rotation = Matrix.CreateRotationY(MathHelper.ToRadians(0.4f)) * this.Rotation;
+            this.Rotation = Matrix.CreateRotationY(MathHelper.ToRadians(40.0f * time)) * this.Rotation;
         }
     }
 }

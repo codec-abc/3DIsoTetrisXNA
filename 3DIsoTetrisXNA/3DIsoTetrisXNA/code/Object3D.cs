@@ -95,7 +95,7 @@ namespace TetrisGame
 
             Vector3 center = temp.Translation;
 
-            
+          /*  
             if (TetrisGame.debug)
             {
                 
@@ -106,7 +106,7 @@ namespace TetrisGame
                 Console.WriteLine(" ");
                  
             }
-
+          */
             Matrix translateBackToParent = Matrix.CreateTranslation(antiOrigin);
             temp = translateBackToParent * temp;
 
@@ -121,7 +121,7 @@ namespace TetrisGame
             temp = translate * temp;
 
             basicEffet.World = temp;
-            
+       /*     
             if (TetrisGame.debug)
             {
                 Console.WriteLine("object to display : " + this.getName());
@@ -135,6 +135,7 @@ namespace TetrisGame
                 Console.WriteLine(" ");
             }
             
+        */
 
             foreach (EffectPass pass in basicEffet.CurrentTechnique.Passes)
             {
@@ -162,6 +163,7 @@ namespace TetrisGame
         {
             foreach (Object3D obj in Childs) // Loop through List with foreach
             {
+                obj.UpdateLogicGame(time);
                 obj.UpdateLogic(time);
             }
         }

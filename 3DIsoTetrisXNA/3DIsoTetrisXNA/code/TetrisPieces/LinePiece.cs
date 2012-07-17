@@ -12,27 +12,27 @@ using Microsoft.Xna.Framework.Media;
 
 namespace TetrisGame
 {
-    class TetrisLine : DummyObject
+    class LinePiece : DummyObject
     {
         Cube cube1;
         Cube cube2;
         Cube cube3;
         Cube cube4;
 
-        public TetrisLine(Vector3 size, Vector3 position)
+        public LinePiece(Vector3 size, Vector3 position)
         {
 
             Vector3 pos;
-            pos = new Vector3((float)(position.X - 3.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
+            pos = new Vector3((float)(position.X - 3.6f * size.X), position.Y + 0.0f, position.Z + 0.0f);
             cube1 = new Cube(size, pos);
 
-            pos = new Vector3((float)(position.X - 1.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
+            pos = new Vector3((float)(position.X - 1.2f * size.X), position.Y + 0.0f, position.Z + 0.0f);
             cube2 = new Cube(size, pos);
 
-            pos = new Vector3((float)(position.X + 1.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
+            pos = new Vector3((float)(position.X + 1.2f * size.X), position.Y + 0.0f, position.Z + 0.0f);
             cube3 = new Cube(size, pos);
 
-            pos = new Vector3((float)(position.X + 3.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
+            pos = new Vector3((float)(position.X + 3.6f * size.X), position.Y + 0.0f, position.Z + 0.0f);
             cube4 = new Cube(size, pos);
 
             cube1.setName("CubeLine1");
@@ -61,7 +61,7 @@ namespace TetrisGame
 
         public override void UpdateLogic(float time)
         {
-            this.Rotation = Matrix.CreateRotationY(MathHelper.ToRadians(0.4f)) * this.Rotation;
+
         }
 
     }

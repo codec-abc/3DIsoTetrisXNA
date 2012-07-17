@@ -19,7 +19,8 @@ namespace TetrisGame
     /// </summary>
     public class TetrisGame : Microsoft.Xna.Framework.Game
     {
-        public static bool debug=false;
+        public static bool debug=true;
+        public static DummyObject rootObject = new DummyObject();
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -30,7 +31,7 @@ namespace TetrisGame
         public static BasicEffect mateEffect;
 
         // Create a cube with a size of 1 (all dimensions) at the origin
-        DummyObject rootObject = new DummyObject();
+       
         
         float aspectRatio = 0.0f;
 
@@ -42,19 +43,26 @@ namespace TetrisGame
 
             rootObject.setName("rootObject");
             rootObject.setPosition(new Vector3(0,0,0));
-
-            TetrisLine line = new TetrisLine(Vector3.One, new Vector3(0, 0, 0));
-            line.setName("TetrisLine1");
-            rootObject.Add(line);
-
-            DummyObject toto = new DummyObject();
-            toto.setPosition(new Vector3(3, 0, 0));
-            toto.setName("dummy object2");
-            line.Add(toto);
-            toto.setVisible(true);
-
             rootObject.setVisible(true);
-            
+            if (debug)
+            {
+                
+                DummyObject dummy1 = new DummyObject();
+                dummy1.setPosition(new Vector3(3, 0, 0));
+                dummy1.setName("Dummy1");
+                dummy1.setVisible(true);
+                rootObject.Add(dummy1);
+
+                LinePiece rotatingcube1 = new LinePiece(Vector3.One, new Vector3(0, 0, 0));
+                rotatingcube1.setName("RotatingCube1");
+                dummy1.Add(rotatingcube1);
+
+                DummyObject toto = new DummyObject();
+                toto.setPosition(new Vector3(0, 0, 0));
+                toto.setName("dummy object2");
+                rotatingcube1.Add(toto);
+                toto.setVisible(true);
+            }
         }
 
         /// <summary>
@@ -104,7 +112,7 @@ namespace TetrisGame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            float time =gameTime.ElapsedGameTime.Milliseconds/1000.0f;
+            float time = gameTime.ElapsedGameTime.Milliseconds/1000.0f;
             rootObject.UpdateLogicGame(time);
           //  move = Matrix.CreateTranslation(new Vector3(1f * time, 0, 1f * time)) *move ;
             base.Update(gameTime);
@@ -128,7 +136,7 @@ namespace TetrisGame
             shadedEffect.Projection = Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
 
             // Enable textures on the Cube Effect. this is necessary to texture the model
-            shadedEffect.TextureEnabled = true;
+            shadedEffect.TextureEnabled = false;
             shadedEffect.Texture = cubeTexture;
 
             // Enable some pretty lights
@@ -150,13 +158,9 @@ namespace TetrisGame
            // mateEffect.EnableDefaultLighting();
 
             
-          //  rootObject.render(shadedEffect,GraphicsDevice,0);
+            rootObject.render(shadedEffect,GraphicsDevice,0);
             rootObject.render(mateEffect, GraphicsDevice, 0); 
             base.Draw(gameTime);
         }
     }
 }
-
-
-
- 
