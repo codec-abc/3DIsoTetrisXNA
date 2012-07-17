@@ -9,7 +9,7 @@ namespace TetrisGame
     {
         protected int level = 1;
         protected int frameEllapsedSinceLastMove = 0;
-        Random random = new Random();
+        
         protected float timeSincePreviousUpdate = 0;
         protected float timeSinceBeginning = 0;
 
@@ -49,11 +49,11 @@ namespace TetrisGame
         {
             try 
             {
-                currentBlock.tryToMove();
+                currentBlock.tryToMove(BlockInGame);
             }
             catch (UnableToMoveBlockException e)
             {
-                TetrisBlock blockToAdd = new TetrisBlock();
+                TetrisBlock blockToAdd = TetrisBlock.generateBlock();
                 BlockInGame.Add(blockToAdd);
                 currentBlock = blockToAdd;
             }
