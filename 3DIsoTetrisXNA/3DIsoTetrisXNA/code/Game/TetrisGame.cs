@@ -23,12 +23,15 @@ namespace TetrisGame
         public static DummyObject rootObject = new DummyObject();
         public static KeyboardState oldState;
         public static KeyboardState newState;
+        
+        protected GameLogic gameLogic= new GameLogic();
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Matrix move = Matrix.Identity;
         // Content
         Texture2D cubeTexture;
+
         public static BasicEffect shadedEffect;
         public static BasicEffect mateEffect;
 
@@ -117,7 +120,8 @@ namespace TetrisGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             float time = gameTime.ElapsedGameTime.Milliseconds/1000.0f;
-            rootObject.UpdateLogicGame(time);
+            gameLogic.updateGame(time);
+          //  rootObject.UpdateLogicGame(time);
           //  move = Matrix.CreateTranslation(new Vector3(1f * time, 0, 1f * time)) *move ;
             base.Update(gameTime);
         }

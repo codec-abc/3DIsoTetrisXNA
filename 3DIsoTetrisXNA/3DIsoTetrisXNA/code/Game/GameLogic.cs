@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TetrisGame.code.Game;
 
 namespace TetrisGame
 {
@@ -9,25 +10,35 @@ namespace TetrisGame
     {
         protected int level = 1;
         protected int frameEllapsedSinceLastMove = 0;
-        
+
+        protected bool gameOver = false;
         protected float timeSincePreviousUpdate = 0;
         protected float timeSinceBeginning = 0;
 
         TetrisBlock currentBlock = null;
+        TetrisGrid grid = new TetrisGrid();
         List<TetrisBlock> BlockInGame = new List<TetrisBlock>();
+
+        public GameLogic()
+        {
+            currentBlock = TetrisBlock.generateBlock();
+        }
 
 
         public void updateGame(float time) 
         {
-            timeSinceBeginning = timeSinceBeginning + time;
-            if (timeSincePreviousUpdate > 1 / 60.0f)
+            if (!gameOver)
             {
-                timeSincePreviousUpdate = 0;
-                this.computeNextFrame();
-            }
-            else
-            {
-                timeSincePreviousUpdate = timeSincePreviousUpdate + time;
+                timeSinceBeginning = timeSinceBeginning + time;
+                if (timeSincePreviousUpdate > 1 / 60.0f)
+                {
+                    timeSincePreviousUpdate = 0;
+                    this.computeNextFrame();
+                }
+                else
+                {
+                    timeSincePreviousUpdate = timeSincePreviousUpdate + time;
+                }
             }
         }
 
@@ -54,8 +65,14 @@ namespace TetrisGame
             catch (UnableToMoveBlockException e)
             {
                 TetrisBlock blockToAdd = TetrisBlock.generateBlock();
-                BlockInGame.Add(blockToAdd);
-                currentBlock = blockToAdd;
+                if (this.grid.canAdd(blockToAdd))
+                {
+                    currentBlock = blockToAdd;
+                }
+                else
+                {
+                    gameOver = true;
+                }
             }
         }
 

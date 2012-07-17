@@ -7,9 +7,18 @@ namespace TetrisGame
 {
     public class BlockI : TetrisBlock
     {
-        public override void tryToMove(List<TetrisBlock> BlockInGame)
+        public BlockI()
         {
-            throw new NotImplementedException();
+            int[] point1 = { 3, 0 };
+            int[] point2 = { 4, 0 };
+            int[] point3 = { 5, 0 };
+            int[] point4 = { 6, 0 };
+
+            pos = new List<int[]>();
+            pos.Add(point1);
+            pos.Add(point2);
+            pos.Add(point3);
+            pos.Add(point4);
         }
     }
 }

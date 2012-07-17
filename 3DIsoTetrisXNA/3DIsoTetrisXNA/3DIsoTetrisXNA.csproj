@@ -109,10 +109,19 @@
   <ItemGroup>
     <Compile Include="code\3D\Cube.cs" />
     <Compile Include="code\3D\DummyObject.cs" />
+    <Compile Include="code\Game\Blocks\BlockI.cs" />
+    <Compile Include="code\Game\Blocks\BlockJ.cs" />
+    <Compile Include="code\Game\Blocks\BlockL.cs" />
+    <Compile Include="code\Game\Blocks\BlockO.cs" />
+    <Compile Include="code\Game\Blocks\BlockS.cs" />
+    <Compile Include="code\Game\Blocks\BlockT.cs" />
+    <Compile Include="code\Game\Blocks\BlockZ.cs" />
     <Compile Include="code\Game\GameLogic.cs" />
     <Compile Include="code\3D\Object3D.cs" />
     <Compile Include="code\3D\GeometryObject.cs" />
     <Compile Include="code\Game\TetrisBlock.cs" />
+    <Compile Include="code\Game\TetrisCell.cs" />
+    <Compile Include="code\Game\TetrisGrid.cs" />
     <Compile Include="code\Game\UnableToMoveBlockException.cs" />
     <Compile Include="code\TestPieces\RotatingCube.cs" />
     <Compile Include="code\TetrisPieces\LinePiece.cs" />
