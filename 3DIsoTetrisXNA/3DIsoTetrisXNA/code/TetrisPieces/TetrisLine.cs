@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace TetrisGame
 {
-    class TetrisLine : GeometryObject
+    class TetrisLine : DummyObject
     {
         Cube cube1;
         Cube cube2;
@@ -35,9 +35,19 @@ namespace TetrisGame
             pos = new Vector3((float)(position.X + 3.0f * size.X), position.Y + 0.0f, position.Z + 0.0f);
             cube4 = new Cube(size, pos);
 
-    //        Size = size;
-    //        Position = position;
-            isConstructed = false;
+            cube1.setName("CubeLine1");
+            cube2.setName("CubeLine2");
+            cube3.setName("CubeLine3");
+            cube4.setName("CubeLine4");
+
+            this.Add(cube1);
+            this.Add(cube2);
+            this.Add(cube3);
+            this.Add(cube4);
+
+            Size = size;
+            Position = position;
+            isConstructed = true;
         }
         protected override void Construct()
         {
@@ -47,10 +57,6 @@ namespace TetrisGame
         public override void RenderToDevice(GraphicsDevice device)
         {
 
-            cube1.RenderToDevice(device);
-            cube2.RenderToDevice(device);
-            cube3.RenderToDevice(device);
-            cube4.RenderToDevice(device);
         }
 
         public override void UpdateLogic(float time)

@@ -23,6 +23,12 @@ namespace TetrisGame
             this.Name = name;
         }
 
+        // Array of vertex information - contains position, normal and texture data
+        protected VertexPositionNormalTexture[] _vertices;
+
+        // The vertex buffer where we load the vertices before drawing the shape
+        protected VertexBuffer _shapeBuffer;
+
 
         protected List<Object3D> Childs = new List<Object3D>();
         public List<Object3D> getChilds()
@@ -67,11 +73,7 @@ namespace TetrisGame
         protected bool isConstructed = false;
 
 
-        // Array of vertex information - contains position, normal and texture data
-        protected VertexPositionNormalTexture[] _vertices;
 
-        // The vertex buffer where we load the vertices before drawing the shape
-        protected VertexBuffer _shapeBuffer;
 
         // Lets us check if the data has been constructed or not to improve performance
         
@@ -96,11 +98,13 @@ namespace TetrisGame
             
             if (TetrisGame.debug)
             {
+                /*
                 Console.WriteLine("object to display : " + this.getName());
                 Console.WriteLine("object world position : " + center);
                 Console.WriteLine("object world position : " + (-antiOrigin));
                 Console.WriteLine(" ");
                 Console.WriteLine(" ");
+                 * */
             }
 
             Matrix translateBackToParent = Matrix.CreateTranslation(antiOrigin);
@@ -126,6 +130,7 @@ namespace TetrisGame
                 Console.WriteLine("object parent relative size : " + this.Size);
                 Console.WriteLine("object parent relative rotation : " + this.Rotation);
                 Console.WriteLine("world matrix : " + basicEffet.World);
+                Console.WriteLine("childs to display : " + this.Childs.Count);
                 Console.WriteLine(" ");
                 Console.WriteLine(" ");
             }
@@ -138,7 +143,7 @@ namespace TetrisGame
             }
          
    
-            foreach (Object3D obj in Childs) // Loop through List with foreach
+            foreach (Object3D obj in this.Childs) // Loop through List with foreach
             {
                 obj.render(basicEffet, device, depth +1);
             }
@@ -151,8 +156,14 @@ namespace TetrisGame
             this.Childs.Add(obj);
         }
 
-
-
         public abstract void UpdateLogic(float time);
+
+        public void UpdateLogicGame(float time)
+        {
+            foreach (Object3D obj in Childs) // Loop through List with foreach
+            {
+                obj.UpdateLogic(time);
+            }
+        }
     }
 }

@@ -19,14 +19,14 @@ namespace TetrisGame
     /// </summary>
     public class TetrisGame : Microsoft.Xna.Framework.Game
     {
-        public static bool debug=true;
+        public static bool debug=false;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Matrix move = Matrix.Identity;
         // Content
         Texture2D cubeTexture;
-        BasicEffect basicEffet;
+        public static BasicEffect basicEffet;
 
         // Create a cube with a size of 1 (all dimensions) at the origin
         DummyObject rootObject = new DummyObject();
@@ -41,7 +41,7 @@ namespace TetrisGame
             rootObject.setName("rootObject");
             rootObject.setPosition(new Vector3(0,0,0));
 
-            TetrisLine line = new TetrisLine(Vector3.One, new Vector3(2, 0, 2));
+            TetrisLine line = new TetrisLine(Vector3.One, new Vector3(0, 0, 0));
             line.setName("TetrisLine1");
             rootObject.Add(line);
         }
@@ -93,7 +93,7 @@ namespace TetrisGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             float time =gameTime.ElapsedGameTime.Milliseconds/1000.0f;
-            rootObject.UpdateLogic(time);
+            rootObject.UpdateLogicGame(time);
           //  move = Matrix.CreateTranslation(new Vector3(1f * time, 0, 1f * time)) *move ;
             base.Update(gameTime);
         }
@@ -107,6 +107,7 @@ namespace TetrisGame
             GraphicsDevice.Clear(Color.Black);
 
             // Set the World matrix which defines the position of the cube
+          //  basicEffet = new BasicEffect(GraphicsDevice);
             basicEffet.World = Matrix.Identity;
             basicEffet.View = Matrix.CreateLookAt(new Vector3(-50,50,-50),Vector3.Zero,new Vector3(0,1,0)) * Matrix.CreateScale(1);
             

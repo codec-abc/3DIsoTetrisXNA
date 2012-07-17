@@ -21,10 +21,11 @@ namespace TetrisGame
 
         public override void RenderToDevice(GraphicsDevice device)
         {
+           
             // Build the cube, setting up the _vertices array
             if (isConstructed == false)
                 Construct();
-
+            
             // Create the shape buffer and dispose of it to prevent out of memory
             using (VertexBuffer buffer = new VertexBuffer(
                 device,
@@ -37,10 +38,9 @@ namespace TetrisGame
 
                 // Send the vertex buffer to the device
                 device.SetVertexBuffer(buffer);
-            }
-
-            // Draw the primitives from the vertex buffer to the device as triangles
-            device.DrawPrimitives(PrimitiveType.TriangleList, 0, NUM_TRIANGLES);
+                // Draw the primitives from the vertex buffer to the device as triangles
+                device.DrawPrimitives(PrimitiveType.TriangleList, 0, NUM_TRIANGLES);
+            } 
         }
 
         protected override void Construct()
