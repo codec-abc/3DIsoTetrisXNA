@@ -47,12 +47,9 @@ namespace TetrisGame
 
         public override void updateEffect(BasicEffect basicEffet)
         {
-        //    Console.WriteLine(" ");
-        //    Console.WriteLine("on affiche un cube de type" + this.Name);
-        //    Console.WriteLine("la couleur est " + this.color);
-        //    Console.WriteLine(" ");
             Vector3 color = new Vector3(this.color.R / 255.0f, this.color.G / 255.0f, this.color.B / 255.0f);
             basicEffet.DiffuseColor = color;
+            basicEffet.VertexColorEnabled = false;
         }
     }
 }

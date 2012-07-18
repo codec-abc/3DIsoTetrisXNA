@@ -138,13 +138,13 @@ namespace TetrisGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.DeepSkyBlue);
+            GraphicsDevice.Clear(Color.LightSkyBlue);
             int screenWidth = Window.ClientBounds.Width;
             int screenHeight = Window.ClientBounds.Height;
 
             world = Matrix.Identity;
-            view = Matrix.CreateLookAt(new Vector3(-50, 50, -50), Vector3.Zero, new Vector3(0, 1, 0)) * Matrix.CreateScale(0.6f);
-            view = Matrix.CreateTranslation(new Vector3(-10, 0, -27)) * view;
+            view = Matrix.CreateLookAt(new Vector3(-50, 50, -50), Vector3.Zero, new Vector3(0, 1, 0));
+            view = Matrix.CreateTranslation(new Vector3(-5, 0, -12)) * view;
            
            //  *
             projection = Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
@@ -173,10 +173,10 @@ namespace TetrisGame
             // Enable textures on the Cube Effect. this is necessary to texture the model
             mateEffect.TextureEnabled = false;
             mateEffect.VertexColorEnabled = true;
-            mateEffect.Texture = cubeTexture;
+            
 
             rootObject.render(shadedEffect,GraphicsDevice,0);
-       //     rootObject.render(mateEffect, GraphicsDevice, 0); 
+            rootObject.render(mateEffect, GraphicsDevice, 0); 
             base.Draw(gameTime);
         }
     }

@@ -20,7 +20,6 @@ namespace TetrisGame
         
 
         VertexPositionColor[] pointList;
-
         short[] lineListIndices;
         int points = 6;
 
@@ -35,12 +34,15 @@ namespace TetrisGame
 
         public override void updateEffect(BasicEffect basicEffet)
         {
-
+          //  if (!basicEffet.LightingEnabled)
+         //   {
+                basicEffet.VertexColorEnabled = true;
+         //   }
         }
 
         protected override void Construct()
         {
-            pointList = new VertexPositionColor[6];
+            pointList = new VertexPositionColor[this.points];
 
             VertexPositionColor vertex1 = new VertexPositionColor(new Vector3(0, 0, 0), Color.Red);
             VertexPositionColor vertex2 = new VertexPositionColor(new Vector3(3, 0, 0), Color.Red);
@@ -63,7 +65,11 @@ namespace TetrisGame
             // Initialize an array of indices of type short.
 
             // Populate the array with references to indices in the vertex buffer
-            lineListIndices = new short[6] { 0, 1, 2, 3, 4, 5 };
+            lineListIndices = new short[points];
+            for (int i = 0; i < points; i++)
+            {
+                lineListIndices[i] = (short)i;
+            }
 
             isConstructed = true;
         }

@@ -18,6 +18,7 @@
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>stuff\Game.ico</ApplicationIcon>
     <Thumbnail>stuff\GameThumbnail.png</Thumbnail>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -30,7 +31,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="code\3D\Grid3D.cs" />
     <Compile Include="code\3D\Cube.cs" />
     <Compile Include="code\3D\DummyObject.cs" />
     <Compile Include="code\Game\Blocks\BlockI.cs" />
@@ -122,7 +123,6 @@
     <Compile Include="code\Game\TetrisBlock.cs" />
     <Compile Include="code\Game\TetrisCell.cs" />
     <Compile Include="code\Game\TetrisGrid.cs" />
-    <Compile Include="code\Game\UnableToMoveBlockException.cs" />
     <Compile Include="code\TestPieces\RotatingCube.cs" />
     <Compile Include="code\TetrisPieces\LinePiece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

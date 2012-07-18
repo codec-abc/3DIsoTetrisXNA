@@ -21,16 +21,9 @@ namespace TetrisGame
 
         public override void RenderToDevice(GraphicsDevice device, BasicEffect basicEffet)
         {
-            
-
-         //   foreach (EffectPass pass in basicEffet.CurrentTechnique.Passes)
-          //                {
-           //                 pass.Apply();
-                          
-             //         }
-
             if (basicEffet.LightingEnabled)
             {
+                
                 // Build the cube, setting up the _vertices array
                 if (isConstructed == false)
                     Construct();
@@ -44,16 +37,12 @@ namespace TetrisGame
                 {
                     // Load the buffer
                     buffer.SetData(_vertices);
-
                     // Send the vertex buffer to the device
                     device.SetVertexBuffer(buffer);
                     // Draw the primitives from the vertex buffer to the device as triangles
                     device.DrawPrimitives(PrimitiveType.TriangleList, 0, NUM_TRIANGLES);
                 }
-                
-               // basicEffet.DiffuseColor = Color.White.ToVector3();
             }
-            
         }
 
         protected override void Construct()
@@ -61,16 +50,16 @@ namespace TetrisGame
             _vertices = new VertexPositionNormalTexture[NUM_VERTICES];
 
             // Calculate the position of the vertices on the top face.
-            Vector3 topLeftFront =  new Vector3(-1.0f, 1.0f, -1.0f) * Size;
-            Vector3 topLeftBack = new Vector3(-1.0f, 1.0f, 1.0f) * Size;
-            Vector3 topRightFront =  new Vector3(1.0f, 1.0f, -1.0f) * Size;
-            Vector3 topRightBack =  new Vector3(1.0f, 1.0f, 1.0f) * Size;
+            Vector3 topLeftFront =  new Vector3(-0.5f, 0.5f, -0.5f) * Size;
+            Vector3 topLeftBack = new Vector3(-0.5f, 0.5f, 0.5f) * Size;
+            Vector3 topRightFront =  new Vector3(0.5f, 0.5f, -0.5f) * Size;
+            Vector3 topRightBack =  new Vector3(0.5f, 0.5f, 0.5f) * Size;
 
             // Calculate the position of the vertices on the bottom face.
-            Vector3 btmLeftFront =  new Vector3(-1.0f, -1.0f, -1.0f) * Size;
-            Vector3 btmLeftBack =  new Vector3(-1.0f, -1.0f, 1.0f) * Size;
-            Vector3 btmRightFront =  new Vector3(1.0f, -1.0f, -1.0f) * Size;
-            Vector3 btmRightBack =  new Vector3(1.0f, -1.0f, 1.0f) * Size;
+            Vector3 btmLeftFront =  new Vector3(-0.5f, -0.5f, -0.5f) * Size;
+            Vector3 btmLeftBack =  new Vector3(-0.5f, -0.5f, 0.5f) * Size;
+            Vector3 btmRightFront =  new Vector3(0.5f, -0.5f, -0.5f) * Size;
+            Vector3 btmRightBack =  new Vector3(0.5f, -0.5f, 0.5f) * Size;
 
             // Normal vectors for each face (needed for lighting / display)
             Vector3 normalFront = new Vector3(0.0f, 0.0f, 1.0f) * Size;

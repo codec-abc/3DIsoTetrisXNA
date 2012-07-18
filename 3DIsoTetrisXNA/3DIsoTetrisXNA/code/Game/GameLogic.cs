@@ -15,6 +15,7 @@ namespace TetrisGame
 {
     public class GameLogic
     {
+        public static float offset = 0.5f;
         protected int level = 1;
         protected int frameEllapsedSinceLastMove = 0;
 
@@ -66,17 +67,20 @@ namespace TetrisGame
         public void print()
         {
             TetrisGame.rootObject = new DummyObject();
+            TetrisGame.rootObject.setVisible(false);
+            Grid3D grid3D = new Grid3D();
+            TetrisGame.rootObject.Add(grid3D);
          //   TetrisGame.rootObject.Add(new Cube(Vector3.One, Vector3.Zero));
          //   TetrisGame.rootObject.Add(new Cube(Vector3.One, new Vector3(3f * 9, 0, 0)));
          //   TetrisGame.rootObject.Add(new Cube(Vector3.One, new Vector3(0, 0, 3f * 19)));
           //  TetrisGame.rootObject.Add(new Cube(Vector3.One, new Vector3(3f * 9, 0, 3f * 19)));
 
-      //      Console.WriteLine("");
-      //      Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
             List<int[]> currentBlockPos = currentBlock.computeActualPos();
             for (int y = 0; y < 20; y++)
             {
-          //      Console.Write("|");
+                Console.Write("|");
                 string line = "|";
                 for (int x = 0; x < 10; x++)
                 {
@@ -115,9 +119,9 @@ namespace TetrisGame
                     line = line + temp + "|";
                     if (addBlock)
                     {
-                     //   Console.Write(temp);
-                     //   Console.Write("|");
-                        Vector3 pos = new Vector3(x * 3f, 0, y * 3f);
+                        Console.Write(temp);
+                        Console.Write("|");
+                        Vector3 pos = new Vector3(x * (1f+offset), 0, y * (1f+offset));
                         Cube cube = new Cube(Vector3.One, pos);
                         cube.setColor(cellColor);
                         if (activeOnCell)
@@ -128,15 +132,15 @@ namespace TetrisGame
                     }
                     else
                     {
-                     //   Console.Write("#");
-                    //    Console.Write("|");
+                        Console.Write("#");
+                        Console.Write("|");
                     }
                 }
               //  Console.WriteLine(line);
-              //  Console.Write("\n");
+                Console.Write("\n");
             }
-          //  Console.WriteLine("");
-          //  Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
         }
 
         public static String getConsoleColor(Color cellColor)
