@@ -29,22 +29,21 @@ namespace TetrisGame
 
         public bool wasAbleToMove(TetrisGrid grid)
         {
-
             List<int[]> newPos = this.computeNextPos();
             List<int[]> Pos = this.computeActualPos();
             // compute next position
             bool canMove = true;
-            for (int i = 0; i < newPos.Count; i++)
+            for (int i = 0; i < newPos.Count && canMove==true; i++)
             {
-                try
+
+                if (newPos[i][0] >= 10 || newPos[i][0] < 0 || newPos[i][1]<0 ||  newPos[i][1]>=20)
                 {
-                    TetrisCell cell = grid.getCell(newPos[i][0], newPos[i][1]);
-                    if (!cell.isEmpty())
-                    {
-                        canMove = false;
-                    }
+                    canMove = false;
+                    break;
                 }
-                catch (Exception e)
+
+                TetrisCell cell = grid.getCell(newPos[i][0], newPos[i][1]);
+                if (!cell.isEmpty())
                 {
                     canMove = false;
                 }
@@ -54,6 +53,7 @@ namespace TetrisGame
             {
                 for (int i = 0; i < pos.Count; i++)
                 {
+                    
                     TetrisCell cell = grid.getCell(Pos[i][0], Pos[i][1]);
                     cell.setEmptyness(false);
                 }

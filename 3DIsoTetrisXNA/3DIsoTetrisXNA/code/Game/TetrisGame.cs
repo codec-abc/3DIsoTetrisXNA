@@ -23,7 +23,8 @@ namespace TetrisGame
         public static DummyObject rootObject = new DummyObject();
         public static KeyboardState oldState;
         public static KeyboardState newState;
-        
+
+        private int updateNumber = 0;
 
         protected GameLogic gameLogic= new GameLogic();
 
@@ -125,8 +126,15 @@ namespace TetrisGame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+            
             float time = gameTime.ElapsedGameTime.Milliseconds/1000.0f;
+          //  Console.WriteLine("iteration : " + this.updateNumber);
+          //  Console.WriteLine("time ellapsed since last iteration : " +time);
+          //  Console.WriteLine("updating game...");
             gameLogic.updateGame(time);
+            this.updateNumber++;
+           // Console.WriteLine("");
+           // Console.WriteLine("");
           //  rootObject.UpdateLogicGame(time);
           //  move = Matrix.CreateTranslation(new Vector3(1f * time, 0, 1f * time)) *move ;
             base.Update(gameTime);
@@ -143,7 +151,7 @@ namespace TetrisGame
             int screenHeight = Window.ClientBounds.Height;
 
             world = Matrix.Identity;
-            view = Matrix.CreateLookAt(new Vector3(-50, 50, -50), Vector3.Zero, new Vector3(0, 1, 0));
+            view = Matrix.CreateLookAt(new Vector3(50, 50, 50), Vector3.Zero, new Vector3(0, 1, 0));
             view = Matrix.CreateTranslation(new Vector3(-5, 0, -12)) * view;
            
            //  *

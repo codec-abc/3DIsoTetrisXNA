@@ -75,12 +75,12 @@ namespace TetrisGame
          //   TetrisGame.rootObject.Add(new Cube(Vector3.One, new Vector3(0, 0, 3f * 19)));
           //  TetrisGame.rootObject.Add(new Cube(Vector3.One, new Vector3(3f * 9, 0, 3f * 19)));
 
-            Console.WriteLine("");
-            Console.WriteLine("");
+          // Console.WriteLine("");
+          //  Console.WriteLine("");
             List<int[]> currentBlockPos = currentBlock.computeActualPos();
             for (int y = 0; y < 20; y++)
             {
-                Console.Write("|");
+              //  Console.Write("|");
                 string line = "|";
                 for (int x = 0; x < 10; x++)
                 {
@@ -119,8 +119,8 @@ namespace TetrisGame
                     line = line + temp + "|";
                     if (addBlock)
                     {
-                        Console.Write(temp);
-                        Console.Write("|");
+                    //    Console.Write(temp);
+                     //   Console.Write("|");
                         Vector3 pos = new Vector3(x * (1f+offset), 0, y * (1f+offset));
                         Cube cube = new Cube(Vector3.One, pos);
                         cube.setColor(cellColor);
@@ -132,15 +132,15 @@ namespace TetrisGame
                     }
                     else
                     {
-                        Console.Write("#");
-                        Console.Write("|");
+                    //    Console.Write("#");
+                     //   Console.Write("|");
                     }
                 }
               //  Console.WriteLine(line);
-                Console.Write("\n");
+            //    Console.Write("\n");
             }
-            Console.WriteLine("");
-            Console.WriteLine("");
+         //   Console.WriteLine("");
+        //    Console.WriteLine("");
         }
 
         public static String getConsoleColor(Color cellColor)
@@ -192,8 +192,8 @@ namespace TetrisGame
         {
 
             if(!currentBlock.wasAbleToMove(grid))
-            {
-                this.grid.add(currentBlock);
+            {      
+                this.grid.add(currentBlock);    
                 this.print();
                 TetrisBlock blockToAdd = TetrisBlock.generateBlock();
                 if (this.grid.canAdd(blockToAdd))
@@ -203,7 +203,7 @@ namespace TetrisGame
                 else
                 {
                     gameOver = true;
-                    Console.WriteLine("!!!!!!!!!! Game Over !!!!!!!!!!");
+                
                 }
             }
         }
@@ -211,7 +211,7 @@ namespace TetrisGame
         public bool HasToUpdate()
         {
           //  if (frameEllapsedSinceLastMove > 0.0473f * level * level - 3.8782f * level + 63.654f)
-            if (frameEllapsedSinceLastMove > 2)
+            if (frameEllapsedSinceLastMove > 1)
             {
                 return true;
             }
