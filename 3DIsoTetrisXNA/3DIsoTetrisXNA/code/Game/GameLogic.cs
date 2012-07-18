@@ -186,11 +186,8 @@ namespace TetrisGame
 
         public void computeNextIteration()
         {
-            try 
-            {
-                currentBlock.tryToMove(grid);
-            }
-            catch (UnableToMoveBlockException e)
+
+            if(!currentBlock.wasAbleToMove(grid))
             {
                 this.grid.add(currentBlock);
                 this.print();

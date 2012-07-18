@@ -160,6 +160,7 @@ namespace TetrisGame
             // Enable textures on the Cube Effect. this is necessary to texture the model
             shadedEffect.TextureEnabled = false;
             shadedEffect.Texture = cubeTexture;
+            shadedEffect.SpecularColor = new Vector3(Color.DarkGray.R / 255.0f, Color.DarkGray.G / 255.0f, Color.DarkGray.B / 255.0f);
 
             // Enable some pretty lights
             shadedEffect.EnableDefaultLighting();

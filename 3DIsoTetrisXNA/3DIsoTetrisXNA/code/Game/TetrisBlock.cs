@@ -27,7 +27,7 @@ namespace TetrisGame
             this.blockColor = value;
         }
 
-        public void tryToMove(TetrisGrid grid)
+        public bool wasAbleToMove(TetrisGrid grid)
         {
 
             List<int[]> newPos = this.computeNextPos();
@@ -57,11 +57,12 @@ namespace TetrisGame
                     TetrisCell cell = grid.getCell(Pos[i][0], Pos[i][1]);
                     cell.setEmptyness(false);
                 }
-                throw new UnableToMoveBlockException();
+                return false;
             }
             else //  else -> update block position
             {
                 this.y = this.y + 1;
+                return true;
             }
         }
 
