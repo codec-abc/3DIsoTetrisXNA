@@ -19,7 +19,7 @@ namespace TetrisGame
     /// </summary>
     public class TetrisGame : Microsoft.Xna.Framework.Game
     {
-        public static bool debug=true;
+        public static bool debug=false;
         public static DummyObject rootObject = new DummyObject();
         public static KeyboardState oldState;
         public static KeyboardState newState;
@@ -139,7 +139,7 @@ namespace TetrisGame
             // Set the World matrix which defines the position of the cube
 
             shadedEffect.World = Matrix.Identity;
-            shadedEffect.View = Matrix.CreateLookAt(new Vector3(-50,50,-50),Vector3.Zero,new Vector3(0,1,0)) * Matrix.CreateScale(1);
+            shadedEffect.View = Matrix.CreateLookAt(new Vector3(-50, 50, -50), Vector3.Zero, new Vector3(0, 1, 0)) * Matrix.CreateScale(0.5f); ;
             
             shadedEffect.Projection = Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
 
@@ -153,7 +153,7 @@ namespace TetrisGame
 
 
             mateEffect.World = Matrix.Identity;
-            mateEffect.View = Matrix.CreateLookAt(new Vector3(-50, 50, -50), Vector3.Zero, new Vector3(0, 1, 0)) * Matrix.CreateScale(1);
+            mateEffect.View = Matrix.CreateLookAt(new Vector3(-50, 50, -50), Vector3.Zero, new Vector3(0, 1, 0)) * Matrix.CreateScale(0.5f);
 
             mateEffect.Projection = Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
 

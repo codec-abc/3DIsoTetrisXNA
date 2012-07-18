@@ -19,6 +19,7 @@ namespace TetrisGame
             pos.Add(point2);
             pos.Add(point3);
             pos.Add(point4);
+            Console.WriteLine("generating BlockL");
         }
     }
 }

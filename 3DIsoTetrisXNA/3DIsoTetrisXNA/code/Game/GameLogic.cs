@@ -1,7 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using System.Collections;
 using TetrisGame;
 
 namespace TetrisGame
@@ -58,6 +65,7 @@ namespace TetrisGame
 
         public void print()
         {
+            TetrisGame.rootObject = new DummyObject();
             Console.WriteLine("");
             Console.WriteLine("");
             List<int[]> currentBlockPos = currentBlock.computeActualPos();
@@ -91,11 +99,22 @@ namespace TetrisGame
                         }
                     }
                     line = line + temp + "|";
+                    if (temp.Equals("*"))
+                    {
+                        Vector3 pos = new Vector3(x * 3f, 0, y * 3f);
+                        Cube cube = new Cube(Vector3.One, pos);
+                        TetrisGame.rootObject.Add(cube);
+                    }
                 }
                 Console.WriteLine(line);
             }
             Console.WriteLine("");
             Console.WriteLine("");
+        }
+
+        public void update3DScene()
+        {
+
         }
 
         public void computeNextIteration()

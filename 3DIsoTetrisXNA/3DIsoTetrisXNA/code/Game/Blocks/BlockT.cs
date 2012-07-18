@@ -18,6 +18,8 @@ namespace TetrisGame
             pos.Add(point1);
             pos.Add(point2);
             pos.Add(point3);
+            pos.Add(point4);
+            Console.WriteLine("generating BlockT");
         }    
     }
 }
