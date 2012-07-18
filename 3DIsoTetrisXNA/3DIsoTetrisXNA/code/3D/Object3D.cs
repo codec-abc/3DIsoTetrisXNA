@@ -136,17 +136,19 @@ namespace TetrisGame
             }
             
         */
-
-            foreach (EffectPass pass in basicEffet.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                this.RenderToDevice(device, basicEffet);
-            }
+            
+            
          
    
             foreach (Object3D obj in this.Childs) // Loop through List with foreach
             {
                 obj.render(basicEffet, device, depth +1);
+            }
+
+            foreach (EffectPass pass in basicEffet.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                this.RenderToDevice(device, basicEffet);
             }
             basicEffet.World = backup;
             

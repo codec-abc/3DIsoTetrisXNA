@@ -15,6 +15,18 @@ namespace TetrisGame
     public class GeometryObject : Object3D
     {
 
+        protected Color color;
+
+        public Color getColor()
+        {
+            return color;
+        }
+
+        public void setColor(Color value)
+        {
+            this.color = value;
+        }
+
         protected int NUM_TRIANGLES;
         protected int NUM_VERTICES;
 

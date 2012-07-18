@@ -47,6 +47,7 @@ namespace TetrisGame
             {
                 int[] currentPos = pos[i];
                 grid[currentPos[0], currentPos[1]].setEmptyness(false);
+                grid[currentPos[0], currentPos[1]].setColor(currentBlock.getColor());
                 
             }
         }

@@ -21,12 +21,25 @@ namespace TetrisGame
 
         public override void RenderToDevice(GraphicsDevice device, BasicEffect basicEffet)
         {
+            Console.WriteLine(" ");
+            Console.WriteLine("on affiche un cube de type" + this.Name);
+            Console.WriteLine("la couleur est " + this.color);
+            Console.WriteLine(" ");
+            Vector3 color = new Vector3(this.color.R / 255.0f, this.color.G / 255.0f, this.color.B / 255.0f);
+            basicEffet.DiffuseColor = color;
+
+         //   foreach (EffectPass pass in basicEffet.CurrentTechnique.Passes)
+          //                {
+           //                 pass.Apply();
+                          
+             //         }
+
             if (basicEffet.LightingEnabled)
             {
                 // Build the cube, setting up the _vertices array
                 if (isConstructed == false)
                     Construct();
-
+              
                 // Create the shape buffer and dispose of it to prevent out of memory
                 using (VertexBuffer buffer = new VertexBuffer(
                     device,
@@ -42,7 +55,10 @@ namespace TetrisGame
                     // Draw the primitives from the vertex buffer to the device as triangles
                     device.DrawPrimitives(PrimitiveType.TriangleList, 0, NUM_TRIANGLES);
                 }
+                
+               // basicEffet.DiffuseColor = Color.White.ToVector3();
             }
+            
         }
 
         protected override void Construct()

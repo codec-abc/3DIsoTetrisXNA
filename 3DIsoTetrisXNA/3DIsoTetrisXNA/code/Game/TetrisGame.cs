@@ -24,7 +24,13 @@ namespace TetrisGame
         public static KeyboardState oldState;
         public static KeyboardState newState;
         
+
         protected GameLogic gameLogic= new GameLogic();
+
+        Matrix world;
+        Matrix view;
+        Matrix projection;
+
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -132,17 +138,25 @@ namespace TetrisGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.DeepSkyBlue);
             int screenWidth = Window.ClientBounds.Width;
             int screenHeight = Window.ClientBounds.Height;
 
+            world = Matrix.Identity;
+            view = Matrix.CreateLookAt(new Vector3(-50, 50, -50), Vector3.Zero, new Vector3(0, 1, 0)) * Matrix.CreateScale(0.6f);
+            view = Matrix.CreateTranslation(new Vector3(-10, 0, -27)) * view;
+           
+           //  *
+            projection = Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
+
+
             // Set the World matrix which defines the position of the cube
 
-            shadedEffect.World = Matrix.Identity;
-            shadedEffect.View = Matrix.CreateLookAt(new Vector3(-50, 50, -50), Vector3.Zero, new Vector3(0, 1, 0)) * Matrix.CreateScale(0.5f); ;
-            
-            shadedEffect.Projection = Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
+            shadedEffect.World = world;
+            shadedEffect.View = view;
+            shadedEffect.Projection = projection;
 
+            
             // Enable textures on the Cube Effect. this is necessary to texture the model
             shadedEffect.TextureEnabled = false;
             shadedEffect.Texture = cubeTexture;
@@ -151,23 +165,17 @@ namespace TetrisGame
             shadedEffect.EnableDefaultLighting();
 
 
-
-            mateEffect.World = Matrix.Identity;
-            mateEffect.View = Matrix.CreateLookAt(new Vector3(-50, 50, -50), Vector3.Zero, new Vector3(0, 1, 0)) * Matrix.CreateScale(0.5f);
-
-            mateEffect.Projection = Matrix.CreateOrthographicOffCenter(-screenWidth / 30, screenWidth / 30, -screenHeight / 30, screenHeight / 30, 0.01f, 1000.0f);
+            mateEffect.World = world;
+            mateEffect.View = view;
+            mateEffect.Projection = projection;
 
             // Enable textures on the Cube Effect. this is necessary to texture the model
             mateEffect.TextureEnabled = false;
             mateEffect.VertexColorEnabled = true;
             mateEffect.Texture = cubeTexture;
 
-            // Enable some pretty lights
-           // mateEffect.EnableDefaultLighting();
-
-            
             rootObject.render(shadedEffect,GraphicsDevice,0);
-            rootObject.render(mateEffect, GraphicsDevice, 0); 
+       //     rootObject.render(mateEffect, GraphicsDevice, 0); 
             base.Draw(gameTime);
         }
     }

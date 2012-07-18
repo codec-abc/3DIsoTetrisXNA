@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace TetrisGame
 {
@@ -19,6 +20,8 @@ namespace TetrisGame
             pos.Add(point2);
             pos.Add(point3);
             pos.Add(point4);
+            blockColor = Color.Cyan;
+            this.name = "BlockI";
             Console.WriteLine("generating BlockI");
         }
     }

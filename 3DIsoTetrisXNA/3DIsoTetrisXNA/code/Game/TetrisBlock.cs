@@ -2,17 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace TetrisGame
 {
     public abstract class TetrisBlock
     {
         protected static Random random = new Random();
+        public string name = "";
+        protected Color blockColor = new Color(new Vector3(0.5f, 0.5f, 0.5f));
         protected int x = 0;
         protected int y = 0;
         protected int rotation = 0;
         protected static int numberOfBlocks = 7;
         protected List<int[]> pos;
+
+        public Color getColor()
+        {
+            return this.blockColor;
+        }
+
+        public void setColor(Color value)
+        {
+            this.blockColor = value;
+        }
+
         public void tryToMove(TetrisGrid grid)
         {
 
