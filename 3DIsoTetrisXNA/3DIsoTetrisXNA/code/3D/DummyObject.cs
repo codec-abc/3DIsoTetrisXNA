@@ -33,6 +33,11 @@ namespace TetrisGame
             this.Visible = false;
         }
 
+        public override void updateEffect(BasicEffect basicEffet)
+        {
+
+        }
+
         protected override void Construct()
         {
             pointList = new VertexPositionColor[6];

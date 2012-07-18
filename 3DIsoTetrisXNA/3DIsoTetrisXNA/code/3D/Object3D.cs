@@ -147,12 +147,16 @@ namespace TetrisGame
 
             foreach (EffectPass pass in basicEffet.CurrentTechnique.Passes)
             {
+                this.updateEffect(basicEffet);
                 pass.Apply();
                 this.RenderToDevice(device, basicEffet);
+                
             }
             basicEffet.World = backup;
             
         }
+
+        public abstract void updateEffect(BasicEffect basicEffet);
 
         public void Add(Object3D obj)
         {
