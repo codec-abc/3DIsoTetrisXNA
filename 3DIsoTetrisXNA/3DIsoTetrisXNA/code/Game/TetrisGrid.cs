@@ -51,5 +51,22 @@ namespace TetrisGame
                 
             }
         }
+
+        public void clearLine(int k)
+        {
+            for (int j = k; j > 0; j--)
+            {
+                for (int i = 0; i < 10 ; i++)
+                {
+                    this.grid[i,j]=this.getCell(i, j - 1);
+                }
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                this.grid[i, 0] = new TetrisCell();
+            }
+        }
+
+
     }
 }

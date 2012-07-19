@@ -24,6 +24,8 @@ namespace TetrisGame
         protected float timeSincePreviousUpdate = 0;
         protected float timeSinceBeginning = 0;
 
+        protected bool forceUpdate = false;
+
         TetrisBlock currentBlock = null;
         TetrisGrid grid = new TetrisGrid();
 
@@ -39,7 +41,7 @@ namespace TetrisGame
             {
                 timeSinceBeginning = timeSinceBeginning + time;
                 
-                if (timeSincePreviousUpdate > 1 / 60.0f)
+                if (timeSincePreviousUpdate > 1 / 30.0f)
                 {
                     timeSincePreviousUpdate = 0;
                     this.computeNextFrame();
@@ -55,8 +57,9 @@ namespace TetrisGame
         {
             frameEllapsedSinceLastMove++;
             this.computeKeyboardMove();
-            if (this.HasToUpdate())
+            if (this.HasToUpdate() || forceUpdate)
             {
+                this.forceUpdate = false;
                 this.computeNextIteration();
                 frameEllapsedSinceLastMove = 0;
             }
@@ -64,7 +67,33 @@ namespace TetrisGame
             {
                 level++;
             }
+            this.checkGrid();
             this.print();
+        }
+
+        public void checkGrid()
+        {
+            bool keep = true;
+            for (int j = 20-1; j >= 0 && keep; j--)
+            {
+                bool lineEmpty = false;
+                for (int i = 0; i < 10 && !lineEmpty; i++)
+                {
+                    if (grid.getCell(i,j).isEmpty())
+                    {
+                        lineEmpty = true;
+                    }
+                }
+                if(!lineEmpty)
+                {
+                    keep = false;
+                    grid.clearLine(j);
+                }
+            }
+            if (!keep)
+            {
+                checkGrid();
+            }
         }
 
         private void computeKeyboardMove()
@@ -96,7 +125,8 @@ namespace TetrisGame
 
             if (downIsPressed)
             {
-                currentBlock.moveDown(grid);
+                this.forceUpdate = true;
+                //currentBlock.moveDown(grid);
             }
 
         }
@@ -220,11 +250,6 @@ namespace TetrisGame
             }
         }
 
-        public void update3DScene()
-        {
-
-        }
-
         public void computeNextIteration()
         {
 
@@ -251,9 +276,9 @@ namespace TetrisGame
 
         public bool HasToUpdate()
         {
-          //  if (frameEllapsedSinceLastMove > 0.0473f * level * level - 3.8782f * level + 63.654f)
-            return true;
-            if (frameEllapsedSinceLastMove > 1)
+            //  return true;
+            if (frameEllapsedSinceLastMove > 0.0473f * level * level - 3.8782f * level + 63.654f)
+           // if (frameEllapsedSinceLastMove > 0)
             {
                 return true;
             }
