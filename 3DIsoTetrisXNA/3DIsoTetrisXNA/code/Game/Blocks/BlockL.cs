@@ -24,5 +24,11 @@ namespace TetrisGame
             this.name = "BlockL";
             Console.WriteLine("generating BlockL");
         }
+
+        public override void rotate()
+        {
+        }
+
+
     }
 }

@@ -54,6 +54,7 @@ namespace TetrisGame
             graphics.PreferMultiSampling = true;
             oldState = Keyboard.GetState();
             newState = Keyboard.GetState();
+            this.IsMouseVisible = true;
 
             rootObject.setName("rootObject");
             rootObject.setPosition(new Vector3(0,0,0));

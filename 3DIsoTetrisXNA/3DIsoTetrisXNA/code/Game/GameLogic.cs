@@ -18,6 +18,7 @@ namespace TetrisGame
         public static float offset = 0.5f;
         protected int level = 1;
         protected int frameEllapsedSinceLastMove = 0;
+        protected int keyboardUpdate = 0;
 
         protected bool gameOver = false;
         protected float timeSincePreviousUpdate = 0;
@@ -37,6 +38,7 @@ namespace TetrisGame
             if (!gameOver)
             {
                 timeSinceBeginning = timeSinceBeginning + time;
+                
                 if (timeSincePreviousUpdate > 1 / 60.0f)
                 {
                     timeSincePreviousUpdate = 0;
@@ -52,9 +54,9 @@ namespace TetrisGame
         public void computeNextFrame()
         {
             frameEllapsedSinceLastMove++;
+            this.computeKeyboardMove();
             if (this.HasToUpdate())
             {
-                this.print();
                 this.computeNextIteration();
                 frameEllapsedSinceLastMove = 0;
             }
@@ -62,6 +64,41 @@ namespace TetrisGame
             {
                 level++;
             }
+            this.print();
+        }
+
+        private void computeKeyboardMove()
+        {
+            TetrisGame.oldState = TetrisGame.newState;
+            TetrisGame.newState = Keyboard.GetState();
+
+            bool spaceWasNotPressed = TetrisGame.oldState.IsKeyUp(Keys.Space);
+            bool spaceIsPressed = TetrisGame.newState.IsKeyDown(Keys.Space);
+
+            if (spaceWasNotPressed && spaceIsPressed)
+            {
+                currentBlock.rotate();
+            }
+
+            bool leftIsPressed = TetrisGame.newState.IsKeyDown(Keys.Left);
+            bool rightIsPressed = TetrisGame.newState.IsKeyDown(Keys.Right);
+            bool downIsPressed = TetrisGame.newState.IsKeyDown(Keys.Down);
+
+            if (rightIsPressed && !leftIsPressed)
+            {
+                currentBlock.moveRight(grid);
+            }
+
+            if (!rightIsPressed && leftIsPressed)
+            {
+                currentBlock.moveLeft(grid);
+            }
+
+            if (downIsPressed)
+            {
+                currentBlock.moveDown(grid);
+            }
+
         }
 
         public void print()
@@ -191,9 +228,9 @@ namespace TetrisGame
         public void computeNextIteration()
         {
 
-            if(!currentBlock.wasAbleToMove(grid))
-            {      
-                this.grid.add(currentBlock);    
+            if (!currentBlock.canMoveTo(grid, currentBlock.computeNextPos(0,1)))
+            {
+                this.grid.add(currentBlock);
                 this.print();
                 TetrisBlock blockToAdd = TetrisBlock.generateBlock();
                 if (this.grid.canAdd(blockToAdd))
@@ -203,14 +240,19 @@ namespace TetrisGame
                 else
                 {
                     gameOver = true;
-                
+
                 }
+            }
+            else
+            {
+                currentBlock.translate(0, 1);
             }
         }
 
         public bool HasToUpdate()
         {
           //  if (frameEllapsedSinceLastMove > 0.0473f * level * level - 3.8782f * level + 63.654f)
+            return true;
             if (frameEllapsedSinceLastMove > 1)
             {
                 return true;

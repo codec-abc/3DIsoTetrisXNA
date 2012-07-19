@@ -24,5 +24,11 @@ namespace TetrisGame
             this.name = "BlockJ";
             Console.WriteLine("generating BlockJ");
         }
+
+        public override void rotate()
+        {
+        }
+
+
     }
 }

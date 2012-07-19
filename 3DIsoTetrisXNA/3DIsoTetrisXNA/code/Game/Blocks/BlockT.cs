@@ -23,6 +23,12 @@ namespace TetrisGame
             blockColor = Color.Purple;
             this.name = "BlockT";
             Console.WriteLine("generating BlockT");
-        }    
+        }
+
+        public override void rotate()
+        {
+        }
+
+
     }
 }
