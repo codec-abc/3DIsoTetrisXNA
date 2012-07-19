@@ -15,7 +15,6 @@ namespace TetrisGame
             int[] point3 = { 4, 1 };
             int[] point4 = { 5, 1 };
 
-
             int[] point5 = { 4, 0 };
             int[] point6 = { 5, 0 };
             int[] point7 = { 4, 1 };
@@ -30,7 +29,6 @@ namespace TetrisGame
             int[] point14 = { 5, 0 };
             int[] point15 = { 4, 1 };
             int[] point16 = { 5, 1 };
-
 
             pos0.Add(point1);
             pos0.Add(point2);
@@ -58,8 +56,5 @@ namespace TetrisGame
             this.name = "BlockO";
             Console.WriteLine("generating BlockO");
         }
-
-
-
     }
 }

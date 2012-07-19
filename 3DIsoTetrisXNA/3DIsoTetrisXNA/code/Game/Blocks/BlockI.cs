@@ -30,7 +30,6 @@ namespace TetrisGame
             int[] point14 = { 4, 1 };
             int[] point15 = { 4, 2 };
             int[] point16 = { 4, 3 };
-
             
             pos0.Add(point1);
             pos0.Add(point2);
@@ -58,8 +57,5 @@ namespace TetrisGame
             this.name = "BlockI";
             Console.WriteLine("generating BlockI");
         }
-
-      
-
     }
 }
