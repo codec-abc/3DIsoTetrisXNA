@@ -16,6 +16,10 @@ namespace TetrisGame
         protected int rotation = 0;
         protected static int numberOfBlocks = 7;
         protected List<int[]> pos;
+        protected List<int[]> pos0 = new List<int[]>();
+        protected List<int[]> pos1 = new List<int[]>();
+        protected List<int[]> pos2 = new List<int[]>();
+        protected List<int[]> pos3 = new List<int[]>();
 
         public Color getColor()
         {
@@ -119,7 +123,6 @@ namespace TetrisGame
             }
         }
 
-        public abstract void rotate();
 
         public void moveRight(TetrisGrid grid)
         {
@@ -149,6 +152,56 @@ namespace TetrisGame
         {
             this.x = this.x + u;
             this.y = this.y + v;
+        }
+
+        public void rotate(TetrisGrid grid)
+        {
+            int currentRotation = this.rotation;
+            currentRotation = (currentRotation + 1) % 4;
+            switch (currentRotation)
+            {
+                case 0:
+                    pos = pos0;
+                    break;
+                case 1:
+                    pos = pos1;
+                    break;
+                case 2:
+                    pos = pos2;
+                    break;
+                case 3:
+                    pos = pos3;
+                    break;
+                default:
+                    pos = pos0;
+                    break;
+            }
+            if (!canMoveTo(grid, computeNextPos(0, 0)))
+            {
+                switch (this.rotation)
+                {
+                    case 0:
+                        pos = pos0;
+                        break;
+                    case 1:
+                        pos = pos1;
+                        break;
+                    case 2:
+                        pos = pos2;
+                        break;
+                    case 3:
+                        pos = pos3;
+                        break;
+                    default:
+                        pos = pos0;
+                        break;
+                }
+            }
+            else
+            {
+                this.rotation = (this.rotation + 1) % 4;
+            }
+
         }
     }
 }

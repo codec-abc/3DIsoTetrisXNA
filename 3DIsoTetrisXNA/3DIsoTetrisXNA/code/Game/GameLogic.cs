@@ -34,14 +34,13 @@ namespace TetrisGame
             currentBlock = TetrisBlock.generateBlock();
         }
 
-
         public void updateGame(float time) 
         {
             if (!gameOver)
             {
                 timeSinceBeginning = timeSinceBeginning + time;
                 
-                if (timeSincePreviousUpdate > 1 / 30.0f)
+                if (timeSincePreviousUpdate > 1 / 20.0f)
                 {
                     timeSincePreviousUpdate = 0;
                     this.computeNextFrame();
@@ -106,7 +105,7 @@ namespace TetrisGame
 
             if (spaceWasNotPressed && spaceIsPressed)
             {
-                currentBlock.rotate();
+                currentBlock.rotate(grid);
             }
 
             bool leftIsPressed = TetrisGame.newState.IsKeyDown(Keys.Left);
@@ -126,7 +125,6 @@ namespace TetrisGame
             if (downIsPressed)
             {
                 this.forceUpdate = true;
-                //currentBlock.moveDown(grid);
             }
 
         }
