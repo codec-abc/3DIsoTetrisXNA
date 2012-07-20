@@ -47,6 +47,8 @@ namespace TetrisGame
        
         
         float aspectRatio = 0.0f;
+        private SpriteFont Font1;
+        private Vector2 FontPos;
 
         public TetrisGame()
         {
@@ -106,6 +108,12 @@ namespace TetrisGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            Font1 = Content.Load<SpriteFont>("Courier New");
+
+            // TODO: Load your game content here            
+            FontPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 20,
+                graphics.GraphicsDevice.Viewport.Height / 20);
+
             cubeTexture = Content.Load<Texture2D>("uvGrid3");
             aspectRatio = GraphicsDevice.Viewport.AspectRatio;
             shadedEffect = new BasicEffect(GraphicsDevice);
@@ -162,6 +170,32 @@ namespace TetrisGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.LightSkyBlue);
+
+            spriteBatch.Begin();
+
+            // Draw Hello World
+            string output = "score : " +GameLogic.score;
+            FontPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 20,
+                graphics.GraphicsDevice.Viewport.Height / 20);
+            // Find the center of the string
+            Vector2 FontOrigin = Font1.MeasureString(output) / 2;
+            // Draw the string
+            spriteBatch.DrawString(Font1, output, FontPos, Color.White,
+                0, Vector2.Zero, 1.0f, SpriteEffects.None, 0.5f);
+
+            output = "level : " + GameLogic.level;
+
+            FontPos = new Vector2(graphics.GraphicsDevice.Viewport.Width -graphics.GraphicsDevice.Viewport.Width / 20,
+                graphics.GraphicsDevice.Viewport.Height / 20);
+            // Find the center of the string
+            FontOrigin = Font1.MeasureString(output);
+            FontOrigin.Y = 0;
+            // Draw the string
+            spriteBatch.DrawString(Font1, output, FontPos, Color.White,
+                0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
+
+            spriteBatch.End();
+
             int screenWidth = Window.ClientBounds.Width;
             int screenHeight = Window.ClientBounds.Height;
 
@@ -196,10 +230,13 @@ namespace TetrisGame
             // Enable textures on the Cube Effect. this is necessary to texture the model
             mateEffect.TextureEnabled = false;
             mateEffect.VertexColorEnabled = true;
+
+            rootObject.render(mateEffect, GraphicsDevice, 0);
+            rootObject.render(shadedEffect,GraphicsDevice,0);
             
 
-            rootObject.render(shadedEffect,GraphicsDevice,0);
-            rootObject.render(mateEffect, GraphicsDevice, 0); 
+
+            
             base.Draw(gameTime);
         }
     }

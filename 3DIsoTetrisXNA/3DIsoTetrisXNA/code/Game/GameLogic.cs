@@ -16,7 +16,7 @@ namespace TetrisGame
     public class GameLogic
     {
         public static float offset = 0.5f;
-        protected int level = 1;
+        public static int level = 1;
         protected int frameEllapsedSinceLastMove = 0;
         protected int keyboardUpdate = 0;
 
