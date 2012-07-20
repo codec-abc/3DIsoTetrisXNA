@@ -30,8 +30,13 @@ namespace TetrisGame
 
         protected bool forceUpdate = false;
 
+        public static double score = 0;
+
         TetrisBlock currentBlock = null;
         TetrisGrid grid = new TetrisGrid();
+
+        protected int maxLevel =100;
+        protected int maxLevelTime = 180;
 
         public GameLogic(GameTime value)
         {
@@ -76,21 +81,22 @@ namespace TetrisGame
                 this.computeNextIteration();
                 frameEllapsedSinceLastMove = 0;
             }
-            if (timeSinceBeginning / level > 1)
+         //   float a = (float) (maxLevel) / (maxLevelTime * maxLevelTime);
+         //   int newlevel = (int) (-a*(timeSinceBeginning - maxLevelTime) * (timeSinceBeginning - maxLevelTime) + maxLevel);
+            float x = timeSinceBeginning;
+            int newlevel = (int) (0.00001f * x * x * x - 0.0081f * x * x + 1.5655f * x - 0.5575f);
+
+            if (newlevel > level) 
             {
-                level++;
-                Console.WriteLine("level up !!!");
-                Console.WriteLine("level is now : " + level);
-                if (level > 100)
-                {
-                    level = 100;
-                }
-                
+                level = newlevel;
+            //    Console.WriteLine("level upgrade");
+            }
+            if (level > maxLevel)
+            {
+                    level = maxLevel;
             }
             this.checkGrid();
             this.print();
-         //   Console.WriteLine("level : " + this.level);
-         //   Console.WriteLine("time since beginning : " + timeSinceBeginning);
         }
 
         public void checkGrid()
@@ -110,6 +116,8 @@ namespace TetrisGame
                 {
                     keep = false;
                     grid.clearLine(j);
+                    GameLogic.score = GameLogic.score + level * 100;
+                    Console.WriteLine("points : " + GameLogic.score);
                 }
             }
             if (!keep)
@@ -172,11 +180,7 @@ namespace TetrisGame
             TetrisGame.rootObject.setVisible(false);
             Grid3D grid3D = new Grid3D();
             TetrisGame.rootObject.Add(grid3D);
-         //   TetrisGame.rootObject.Add(new Cube(Vector3.One, Vector3.Zero));
-         //   TetrisGame.rootObject.Add(new Cube(Vector3.One, new Vector3(3f * 9, 0, 0)));
-         //   TetrisGame.rootObject.Add(new Cube(Vector3.One, new Vector3(0, 0, 3f * 19)));
-          //  TetrisGame.rootObject.Add(new Cube(Vector3.One, new Vector3(3f * 9, 0, 3f * 19)));
-
+       
           // Console.WriteLine("");
           //  Console.WriteLine("");
             List<int[]> currentBlockPos = currentBlock.computeActualPos();
@@ -287,11 +291,9 @@ namespace TetrisGame
 
         public void computeNextIteration()
         {
-
             if (!currentBlock.canMoveTo(grid, currentBlock.computeNextPos(0,1)))
             {
                 this.grid.add(currentBlock);
-               // this.print();
                 TetrisBlock blockToAdd = TetrisBlock.generateBlock();
                 if (this.grid.canAdd(blockToAdd))
                 {
@@ -311,13 +313,8 @@ namespace TetrisGame
 
         public bool HasToUpdate()
         {
-            //  return true;
-           // level = 99;
-         //   int levelTime = (int) (0.0473f * level * level - 3.8782f * level + 63.654f);
             int levelTime = (int)(-level * 6.0f / 10.0f + 60.0f);
-           // Console.WriteLine("levelTime : " + levelTime);
             if (frameEllapsedSinceLastMove > levelTime)
-           // if (frameEllapsedSinceLastMove > 0)
             {
                 return true;
             }
