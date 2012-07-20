@@ -50,6 +50,11 @@ namespace TetrisGame
         private SpriteFont Font1;
         private Vector2 FontPos;
 
+        public void newGame()
+        {
+            this.gameLogic = null;
+        }
+
         public TetrisGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -143,7 +148,7 @@ namespace TetrisGame
             TetrisGame.keyboardStates[0]=Keyboard.GetState();
             if(this.gameLogic == null)
             {
-                this.gameLogic = new GameLogic(gameTime);
+                this.gameLogic = new GameLogic(gameTime,this);
             }
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
@@ -172,19 +177,21 @@ namespace TetrisGame
             GraphicsDevice.Clear(Color.LightSkyBlue);
 
             spriteBatch.Begin();
-
-            // Draw Hello World
+            //////////////////////////SCORE//////////////////////////
             string output = "score : " +GameLogic.score;
             FontPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 20,
                 graphics.GraphicsDevice.Viewport.Height / 20);
             // Find the center of the string
             Vector2 FontOrigin = Font1.MeasureString(output) / 2;
+            FontOrigin.Y = 0;
             // Draw the string
             spriteBatch.DrawString(Font1, output, FontPos, Color.White,
                 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0.5f);
+            //////////////////////////SCORE//////////////////////////
 
+
+            //////////////////////////LEVEL//////////////////////////
             output = "level : " + GameLogic.level;
-
             FontPos = new Vector2(graphics.GraphicsDevice.Viewport.Width -graphics.GraphicsDevice.Viewport.Width / 20,
                 graphics.GraphicsDevice.Viewport.Height / 20);
             // Find the center of the string
@@ -193,7 +200,35 @@ namespace TetrisGame
             // Draw the string
             spriteBatch.DrawString(Font1, output, FontPos, Color.White,
                 0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
+            //////////////////////////LEVEL//////////////////////////
 
+
+            //////////////////////////TIME//////////////////////////
+            output = "time : " + (int) (GameLogic.timeSinceBeginning);
+            FontPos = new Vector2(graphics.GraphicsDevice.Viewport.Width/2 ,
+                graphics.GraphicsDevice.Viewport.Height / 20);
+            // Find the center of the string
+            FontOrigin = Font1.MeasureString(output);
+            FontOrigin.Y = 0;
+            // Draw the string
+            spriteBatch.DrawString(Font1, output, FontPos, Color.White,
+                0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
+            //////////////////////////TIME//////////////////////////
+
+            //////////////////////////GAME OVER//////////////////////////
+            if (GameLogic.gameOver)
+            {
+                output = "game over, press n to play again";
+                FontPos = new Vector2(graphics.GraphicsDevice.Viewport.Width/2,
+                   graphics.GraphicsDevice.Viewport.Height / 8 +  graphics.GraphicsDevice.Viewport.Height / 20);
+                // Find the center of the string
+                FontOrigin = Font1.MeasureString(output)/2;
+                FontOrigin.Y = 0;
+                // Draw the string
+                spriteBatch.DrawString(Font1, output, FontPos, Color.White,
+                    0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
+            }
+            //////////////////////////GAME OVER//////////////////////////
             spriteBatch.End();
 
             int screenWidth = Window.ClientBounds.Width;

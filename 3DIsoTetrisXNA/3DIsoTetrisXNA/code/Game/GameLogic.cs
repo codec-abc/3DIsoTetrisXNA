@@ -23,9 +23,9 @@ namespace TetrisGame
         protected GameTime timeOfBeginning;
         protected GameTime currentTime;
 
-        protected bool gameOver = false;
+        public static bool gameOver = false;
         protected float timeSincePreviousUpdate = 0;
-        protected float timeSinceBeginning = 0;
+        public static float timeSinceBeginning = 0;
         protected float beginTime = 0;
 
         protected bool forceUpdate = false;
@@ -38,12 +38,18 @@ namespace TetrisGame
         protected int maxLevel =100;
         protected int maxLevelTime = 180;
 
-        public GameLogic(GameTime value)
+        protected TetrisGame myGame;
+
+        public GameLogic(GameTime value, TetrisGame game)
         {
             currentBlock = TetrisBlock.generateBlock();
             this.timeOfBeginning = value;
             beginTime = value.TotalGameTime.Seconds + value.TotalGameTime.Milliseconds/1000.0f;
             timeSinceBeginning = 0;
+            this.myGame = game;
+            GameLogic.level = 1;
+            GameLogic.score = 0;
+            GameLogic.gameOver = false;
         }
 
         public void setBeginningTime(GameTime value)
@@ -54,11 +60,11 @@ namespace TetrisGame
 
         public void updateGame(GameTime time) 
         {
-            this.currentTime = time;
-            timeSinceBeginning = timeSinceBeginning + time.ElapsedGameTime.Milliseconds / 1000.0f; ;
+
             if (!gameOver)
             {
-                
+                this.currentTime = time;
+                timeSinceBeginning = timeSinceBeginning + time.ElapsedGameTime.Milliseconds / 1000.0f; ;
                 this.computeKeyboardMove();
                 if (timeSincePreviousUpdate > 1 / 70.0f)
                 {
@@ -68,6 +74,13 @@ namespace TetrisGame
                 else
                 {
                     timeSincePreviousUpdate = timeSincePreviousUpdate + time.ElapsedGameTime.Milliseconds / 1000.0f; ;
+                }
+            }
+            else
+            {
+                if (TetrisGame.keyboardStates[0].IsKeyDown(Keys.N) && TetrisGame.keyboardStates[1].IsKeyDown(Keys.N))
+                {
+                    myGame.newGame();
                 }
             }
         }
