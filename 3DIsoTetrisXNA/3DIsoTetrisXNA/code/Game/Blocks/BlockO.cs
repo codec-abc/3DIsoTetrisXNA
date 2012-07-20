@@ -54,7 +54,7 @@ namespace TetrisGame
 
             blockColor = Color.Yellow;
             this.name = "BlockO";
-            Console.WriteLine("generating BlockO");
+         //   Console.WriteLine("generating BlockO");
         }
     }
 }

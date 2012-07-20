@@ -20,34 +20,49 @@ namespace TetrisGame
         protected int frameEllapsedSinceLastMove = 0;
         protected int keyboardUpdate = 0;
 
+        protected GameTime timeOfBeginning;
+        protected GameTime currentTime;
+
         protected bool gameOver = false;
         protected float timeSincePreviousUpdate = 0;
         protected float timeSinceBeginning = 0;
+        protected float beginTime = 0;
 
         protected bool forceUpdate = false;
 
         TetrisBlock currentBlock = null;
         TetrisGrid grid = new TetrisGrid();
 
-        public GameLogic()
+        public GameLogic(GameTime value)
         {
             currentBlock = TetrisBlock.generateBlock();
+            this.timeOfBeginning = value;
+            beginTime = value.TotalGameTime.Seconds + value.TotalGameTime.Milliseconds/1000.0f;
+            timeSinceBeginning = 0;
         }
 
-        public void updateGame(float time) 
+        public void setBeginningTime(GameTime value)
         {
+            this.timeOfBeginning=value;
+            this.beginTime = value.TotalGameTime.Seconds + value.TotalGameTime.Milliseconds / 1000.0f;
+        }
+
+        public void updateGame(GameTime time) 
+        {
+            this.currentTime = time;
+            timeSinceBeginning = timeSinceBeginning + time.ElapsedGameTime.Milliseconds / 1000.0f; ;
             if (!gameOver)
             {
-                timeSinceBeginning = timeSinceBeginning + time;
                 
-                if (timeSincePreviousUpdate > 1 / 20.0f)
+                this.computeKeyboardMove();
+                if (timeSincePreviousUpdate > 1 / 70.0f)
                 {
                     timeSincePreviousUpdate = 0;
                     this.computeNextFrame();
                 }
                 else
                 {
-                    timeSincePreviousUpdate = timeSincePreviousUpdate + time;
+                    timeSincePreviousUpdate = timeSincePreviousUpdate + time.ElapsedGameTime.Milliseconds / 1000.0f; ;
                 }
             }
         }
@@ -55,19 +70,27 @@ namespace TetrisGame
         public void computeNextFrame()
         {
             frameEllapsedSinceLastMove++;
-            this.computeKeyboardMove();
             if (this.HasToUpdate() || forceUpdate)
             {
                 this.forceUpdate = false;
                 this.computeNextIteration();
                 frameEllapsedSinceLastMove = 0;
             }
-            if (timeSinceBeginning / level > 20)
+            if (timeSinceBeginning / level > 1)
             {
                 level++;
+                Console.WriteLine("level up !!!");
+                Console.WriteLine("level is now : " + level);
+                if (level > 100)
+                {
+                    level = 100;
+                }
+                
             }
             this.checkGrid();
             this.print();
+         //   Console.WriteLine("level : " + this.level);
+         //   Console.WriteLine("time since beginning : " + timeSinceBeginning);
         }
 
         public void checkGrid()
@@ -97,28 +120,42 @@ namespace TetrisGame
 
         private void computeKeyboardMove()
         {
-            TetrisGame.oldState = TetrisGame.newState;
-            TetrisGame.newState = Keyboard.GetState();
 
-            bool spaceWasNotPressed = TetrisGame.oldState.IsKeyUp(Keys.Space);
-            bool spaceIsPressed = TetrisGame.newState.IsKeyDown(Keys.Space);
+            bool spaceWasNotPressed = TetrisGame.keyboardStates[1].IsKeyUp(Keys.Space);
+            bool spaceIsPressed = TetrisGame.keyboardStates[0].IsKeyDown(Keys.Space);
 
             if (spaceWasNotPressed && spaceIsPressed)
             {
                 currentBlock.rotate(grid);
             }
 
-            bool leftIsPressed = TetrisGame.newState.IsKeyDown(Keys.Left);
-            bool rightIsPressed = TetrisGame.newState.IsKeyDown(Keys.Right);
-            bool downIsPressed = TetrisGame.newState.IsKeyDown(Keys.Down);
+            bool leftIsPressed = TetrisGame.keyboardStates[0].IsKeyDown(Keys.Left);
+            bool rightIsPressed = TetrisGame.keyboardStates[0].IsKeyDown(Keys.Right);
+            bool downIsPressed = TetrisGame.keyboardStates[0].IsKeyDown(Keys.Down);
 
             if (rightIsPressed && !leftIsPressed)
             {
+                bool update = TetrisGame.keyboardStates[1].IsKeyUp(Keys.Right);
+                bool keep = true;
+                for (int i = 1; i < TetrisGame.keyboardStates.Count && keep; i++)
+                {
+                    keep = TetrisGame.keyboardStates[i].IsKeyDown(Keys.Right);
+                }
+                update =update || keep;
+                if( update)
                 currentBlock.moveRight(grid);
             }
 
             if (!rightIsPressed && leftIsPressed)
             {
+                bool update = TetrisGame.keyboardStates[1].IsKeyUp(Keys.Left);
+                bool keep = true;
+                for (int i = 1; i < TetrisGame.keyboardStates.Count && keep; i++)
+                {
+                    keep = TetrisGame.keyboardStates[i].IsKeyDown(Keys.Left);
+                }
+                update = update || keep;
+                if (update)
                 currentBlock.moveLeft(grid);
             }
 
@@ -254,7 +291,7 @@ namespace TetrisGame
             if (!currentBlock.canMoveTo(grid, currentBlock.computeNextPos(0,1)))
             {
                 this.grid.add(currentBlock);
-                this.print();
+               // this.print();
                 TetrisBlock blockToAdd = TetrisBlock.generateBlock();
                 if (this.grid.canAdd(blockToAdd))
                 {
@@ -263,7 +300,7 @@ namespace TetrisGame
                 else
                 {
                     gameOver = true;
-
+                    Console.WriteLine("Game Over");
                 }
             }
             else
@@ -275,7 +312,11 @@ namespace TetrisGame
         public bool HasToUpdate()
         {
             //  return true;
-            if (frameEllapsedSinceLastMove > 0.0473f * level * level - 3.8782f * level + 63.654f)
+           // level = 99;
+         //   int levelTime = (int) (0.0473f * level * level - 3.8782f * level + 63.654f);
+            int levelTime = (int)(-level * 6.0f / 10.0f + 60.0f);
+           // Console.WriteLine("levelTime : " + levelTime);
+            if (frameEllapsedSinceLastMove > levelTime)
            // if (frameEllapsedSinceLastMove > 0)
             {
                 return true;

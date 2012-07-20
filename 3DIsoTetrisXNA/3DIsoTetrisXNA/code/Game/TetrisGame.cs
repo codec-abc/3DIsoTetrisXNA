@@ -21,12 +21,13 @@ namespace TetrisGame
     {
         public static bool debug=false;
         public static DummyObject rootObject = new DummyObject();
-        public static KeyboardState oldState;
-        public static KeyboardState newState;
+
+        public static List<KeyboardState> keyboardStates = new List<KeyboardState>();
+        protected int numberOfRecordedStates = 10;
 
         private int updateNumber = 0;
 
-        protected GameLogic gameLogic= new GameLogic();
+        protected GameLogic gameLogic = null;
 
         Matrix world;
         Matrix view;
@@ -52,8 +53,10 @@ namespace TetrisGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferMultiSampling = true;
-            oldState = Keyboard.GetState();
-            newState = Keyboard.GetState();
+            for (int i = 0; i <this.numberOfRecordedStates; i++)
+            {
+                TetrisGame.keyboardStates.Add(Keyboard.GetState());
+            }
             this.IsMouseVisible = true;
 
             rootObject.setName("rootObject");
@@ -88,8 +91,9 @@ namespace TetrisGame
         /// </summary>
         protected override void Initialize()
         {
+ 
             // TODO: Add your initialization logic here
-
+            
             base.Initialize();
         }
 
@@ -124,6 +128,15 @@ namespace TetrisGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            for (int i = this.numberOfRecordedStates-1; i > 0; i--)
+            {
+                TetrisGame.keyboardStates[i] = TetrisGame.keyboardStates[i - 1]; 
+            }
+            TetrisGame.keyboardStates[0]=Keyboard.GetState();
+            if(this.gameLogic == null)
+            {
+                this.gameLogic = new GameLogic(gameTime);
+            }
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
@@ -132,8 +145,9 @@ namespace TetrisGame
           //  Console.WriteLine("iteration : " + this.updateNumber);
           //  Console.WriteLine("time ellapsed since last iteration : " +time);
           //  Console.WriteLine("updating game...");
-            gameLogic.updateGame(time);
+            gameLogic.updateGame(gameTime);
             this.updateNumber++;
+
            // Console.WriteLine("");
            // Console.WriteLine("");
           //  rootObject.UpdateLogicGame(time);

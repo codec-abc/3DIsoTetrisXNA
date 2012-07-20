@@ -54,7 +54,7 @@ namespace TetrisGame
 
             blockColor = Color.Red;
             this.name = "BlockZ";
-            Console.WriteLine("generating BlockZ");
+           // Console.WriteLine("generating BlockZ");
         }
     }
 }

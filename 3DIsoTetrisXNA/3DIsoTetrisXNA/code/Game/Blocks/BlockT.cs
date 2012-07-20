@@ -54,7 +54,7 @@ namespace TetrisGame
 
             blockColor = Color.Purple;
             this.name = "BlockT";
-            Console.WriteLine("generating BlockT");
+           // Console.WriteLine("generating BlockT");
         }
     }
 }
