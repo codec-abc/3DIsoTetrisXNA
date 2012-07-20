@@ -43,6 +43,7 @@ namespace TetrisGame
         public static BasicEffect shadedEffect;
         public static BasicEffect mateEffect;
 
+        private Texture2D backgroundTexture;
         // Create a cube with a size of 1 (all dimensions) at the origin
        
         
@@ -119,7 +120,7 @@ namespace TetrisGame
             FontPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 20,
                 graphics.GraphicsDevice.Viewport.Height / 20);
 
-            cubeTexture = Content.Load<Texture2D>("uvGrid3");
+            cubeTexture = Content.Load<Texture2D>("backgroundTetris");
             aspectRatio = GraphicsDevice.Viewport.AspectRatio;
             shadedEffect = new BasicEffect(GraphicsDevice);
             mateEffect = new BasicEffect(GraphicsDevice);
@@ -177,6 +178,19 @@ namespace TetrisGame
             GraphicsDevice.Clear(Color.LightSkyBlue);
 
             spriteBatch.Begin();
+
+
+
+            Rectangle rectangle = new Rectangle();
+
+            Texture2D texture = new Texture2D(GraphicsDevice, 1, 1);
+            
+            int screenWidth = Window.ClientBounds.Width;
+            int screenHeight = Window.ClientBounds.Height;
+
+            spriteBatch.Draw(cubeTexture, new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
+
+
             //////////////////////////SCORE//////////////////////////
             string output = "score : " +GameLogic.score;
             FontPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 20,
@@ -208,7 +222,7 @@ namespace TetrisGame
             FontPos = new Vector2(graphics.GraphicsDevice.Viewport.Width/2 ,
                 graphics.GraphicsDevice.Viewport.Height / 20);
             // Find the center of the string
-            FontOrigin = Font1.MeasureString(output);
+            FontOrigin = Font1.MeasureString(output)/2;
             FontOrigin.Y = 0;
             // Draw the string
             spriteBatch.DrawString(Font1, output, FontPos, Color.White,
@@ -231,8 +245,7 @@ namespace TetrisGame
             //////////////////////////GAME OVER//////////////////////////
             spriteBatch.End();
 
-            int screenWidth = Window.ClientBounds.Width;
-            int screenHeight = Window.ClientBounds.Height;
+
 
             world = Matrix.Identity;
             view = Matrix.CreateLookAt(new Vector3(50, 50, 50), Vector3.Zero, new Vector3(0, 1, 0));

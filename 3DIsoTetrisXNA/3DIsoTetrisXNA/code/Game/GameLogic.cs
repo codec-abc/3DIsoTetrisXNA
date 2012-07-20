@@ -64,7 +64,12 @@ namespace TetrisGame
             if (!gameOver)
             {
                 this.currentTime = time;
-                timeSinceBeginning = timeSinceBeginning + time.ElapsedGameTime.Milliseconds / 1000.0f; ;
+                float newTime = timeSinceBeginning + time.ElapsedGameTime.Milliseconds / 1000.0f;
+                if (newTime <= timeSinceBeginning)
+                {
+                    Console.WriteLine("problem");
+                }
+                timeSinceBeginning = newTime;
                 this.computeKeyboardMove();
                 if (timeSincePreviousUpdate > 1 / 70.0f)
                 {
@@ -97,7 +102,7 @@ namespace TetrisGame
          //   float a = (float) (maxLevel) / (maxLevelTime * maxLevelTime);
          //   int newlevel = (int) (-a*(timeSinceBeginning - maxLevelTime) * (timeSinceBeginning - maxLevelTime) + maxLevel);
             float x = timeSinceBeginning;
-            int newlevel = (int) (0.00001f * x * x * x - 0.0081f * x * x + 1.5655f * x - 0.5575f);
+            int newlevel = (int) (0.000013573f * x * x * x - 0.0079825f * x * x + 1.5527f * x);
 
             if (newlevel > level) 
             {
@@ -130,7 +135,7 @@ namespace TetrisGame
                     keep = false;
                     grid.clearLine(j);
                     GameLogic.score = GameLogic.score + level * 100;
-                    Console.WriteLine("points : " + GameLogic.score);
+                   // Console.WriteLine("points : " + GameLogic.score);
                 }
             }
             if (!keep)
