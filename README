@@ -1,1 +1,2 @@
-the goal of this project is to create an isometric tetris game using XNA.
+The goal of this project is to create an isometric tetris game using XNA.
+Controls : left, right , down : move block; space : rotate block; in case of game over type n to restart
