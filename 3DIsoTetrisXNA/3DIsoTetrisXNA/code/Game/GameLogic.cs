@@ -33,6 +33,7 @@ namespace TetrisGame
         public static double score = 0;
 
         TetrisBlock currentBlock = null;
+        TetrisBlock nextBlock;
         TetrisGrid grid = new TetrisGrid();
 
         protected int maxLevel =100;
@@ -43,6 +44,7 @@ namespace TetrisGame
         public GameLogic(GameTime value, TetrisGame game)
         {
             currentBlock = TetrisBlock.generateBlock();
+            nextBlock = TetrisBlock.generateBlock();
             this.timeOfBeginning = value;
             beginTime = value.TotalGameTime.Seconds + value.TotalGameTime.Milliseconds/1000.0f;
             timeSinceBeginning = 0;
@@ -198,7 +200,18 @@ namespace TetrisGame
             TetrisGame.rootObject.setVisible(false);
             Grid3D grid3D = new Grid3D();
             TetrisGame.rootObject.Add(grid3D);
-       
+            List<int[]> nextBlockPos = nextBlock.computeActualPos();
+            Color cellColornextBlock = this.nextBlock.getColor();
+            Vector3 center= new Vector3(0 * (1f + offset), 0, -2 * (1f + offset));
+            for (int i = 0; i < nextBlockPos.Count; i++)
+            {
+                Vector3 pos = center + new Vector3(nextBlockPos[i][0] * (1f + offset), 0, nextBlockPos[i][1] * (1f + offset));
+                Cube cube = new Cube(Vector3.One, pos);
+                cube.setColor(cellColornextBlock);
+                cube.Name = currentBlock.name;
+                TetrisGame.rootObject.Add(cube);
+            }
+            
           // Console.WriteLine("");
           //  Console.WriteLine("");
             List<int[]> currentBlockPos = currentBlock.computeActualPos();
@@ -312,10 +325,11 @@ namespace TetrisGame
             if (!currentBlock.canMoveTo(grid, currentBlock.computeNextPos(0,1)))
             {
                 this.grid.add(currentBlock);
-                TetrisBlock blockToAdd = TetrisBlock.generateBlock();
+                TetrisBlock blockToAdd = this.nextBlock;
                 if (this.grid.canAdd(blockToAdd))
                 {
-                    currentBlock = blockToAdd;
+                    currentBlock = this.nextBlock;
+                    this.nextBlock = TetrisBlock.generateBlock();
                 }
                 else
                 {
